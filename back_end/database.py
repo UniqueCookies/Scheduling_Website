@@ -60,6 +60,18 @@ def display_all(connection,cursor):
     for row in rows:
         print(row)
 
+def delete_row(connection,cursor,identification):
+    query = f"DELETE FROM teacher_availability WHERE identification = ?"
+    cursor.execute(query, (identification,))
+
+
+    if cursor.rowcount>0:
+        connection.commit()
+        print("delete is successful")
+    else:
+        connection.rollback()
+        print(f"Error:{identification} does not exist")
+
  # Close the cursor and connection
 def close_connection(cursor,connection):
     cursor.close()
