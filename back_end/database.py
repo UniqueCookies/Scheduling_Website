@@ -43,8 +43,12 @@ def insert_data(connection,cursor,info_list):
     '''
     values = (identification,teacher_name,period_1,period_2,period_3,period_4,
             period_5,period_6,course_1,course_2,course_3,course_4)
-    cursor.execute(query,values)
-    connection.commit()
+
+    try:
+        cursor.execute(query,values)
+        connection.commit()
+    except sqlite3.Error as e:
+        print(f"An error occured: {e}")
 
 
 
