@@ -8,6 +8,8 @@ else:
     print('Connection is successful')
 
 create_table(cursor)
+info_list = [101,'Sally',0,0,0,0,1,1,'math','math','science','science']
+insert_data(connection,cursor,info_list)
 
 
 #close connection

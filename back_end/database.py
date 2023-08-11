@@ -9,9 +9,9 @@ def connect_database():
 
 def create_table(cursor):
     cursor.execute('''
-                CREATE TABLE IF NOT EXISTS teacher_avaialbility
+                CREATE TABLE IF NOT EXISTS teacher_availability
                   ( 
-                    id int PRIMARY KEY,
+                    identification INTEGER PRIMARY KEY NOT NULL,
                     teacher_name TEXT NOT NULL, 
                     period_1 INTEGER,
                     period_2 INTEGER,
@@ -26,12 +26,29 @@ def create_table(cursor):
                   )
                   ''')
 
-def function_tobedefined(conn,cursor):
+def insert_data(connection,cursor,info_list):
     # Insert data into the table
-    cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", ('Alice', 25))
-    cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", ('Bob', 30))
-    conn.commit()
+    identification, teacher_name, period_1, period_2, period_3, period_4, period_5, period_6, course_1, course_2, course_3, course_4 = info_list
+    query = '''
+                    INSERT INTO teacher_availability
+                    (
+                    identification,teacher_name,period_1,period_2,period_3,period_4, 
+                    period_5,period_6,course_1,course_2,course_3,course_4
+                    )
+                    VALUES
+                    (
+                    ?,?,?,?,?,?,?,?,?,?,?,?
+                    )
+    
+    '''
+    values = (identification,teacher_name,period_1,period_2,period_3,period_4,
+            period_5,period_6,course_1,course_2,course_3,course_4)
+    cursor.execute(query,values)
+    connection.commit()
 
+
+
+def function_tobedefined(conn, cursor):
     # Retrieve data from the table
     cursor.execute("SELECT * FROM users")
     rows = cursor.fetchall()
