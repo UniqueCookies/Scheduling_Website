@@ -3,7 +3,7 @@ import sqlite3
 # Connect to the SQLite database (creates a new database if it doesn't exist)
 # Create a cursor object to interact with the database
 def connect_database():
-    connection = sqlite3.connect('teacher_availability.db')
+    connection = sqlite3.connect('database/teacher_availability.db')
     cursor = connection.cursor()
     return connection, cursor, True
 
@@ -57,8 +57,11 @@ def display_all(connection,cursor):
     rows = cursor.fetchall()
 
     # Display retrieved data
-    for row in rows:
-        print(row)
+    if len(rows)>0:
+        for row in rows:
+            print(row)
+    else:
+        print("Error: The table is empty")
 
 def delete_row(connection,cursor,identification):
     query = f"DELETE FROM teacher_availability WHERE identification = ?"
@@ -70,7 +73,7 @@ def delete_row(connection,cursor,identification):
         print("delete is successful")
     else:
         connection.rollback()
-        print(f"Error:{identification} does not exist")
+        print(f"Error: {identification} does not exist")
 
  # Close the cursor and connection
 def close_connection(cursor,connection):
