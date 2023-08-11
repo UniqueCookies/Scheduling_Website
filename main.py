@@ -7,6 +7,8 @@ if(answer!=True):
 else:
     print('Connection is successful')
 
+create_table(cursor)
+
 
 #close connection
 if(close_connection(cursor,connection)):

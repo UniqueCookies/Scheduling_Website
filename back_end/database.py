@@ -8,8 +8,23 @@ def connect_database():
     return connection, cursor, True
 
 def create_table(cursor):
-    cursor.execute('''CREATE TABLE IF NOT EXISTS users
-                  (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)''')
+    cursor.execute('''
+                CREATE TABLE IF NOT EXISTS teacher_avaialbility
+                  ( 
+                    id int PRIMARY KEY,
+                    teacher_name TEXT NOT NULL, 
+                    period_1 INTEGER,
+                    period_2 INTEGER,
+                    period_3 INTEGER,
+                    period_4 INTEGER, 
+                    period_5 INTEGER,
+                    period_6 INTEGER,
+                    course_1 TEXT NOT NULL,
+                    course_2 TEXT,
+                    course_3 TEXT,
+                    course_4 TEXT
+                  )
+                  ''')
 
 def function_tobedefined(conn,cursor):
     # Insert data into the table
