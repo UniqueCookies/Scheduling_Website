@@ -6,10 +6,25 @@ def create_matrix(num_period, num_classes):
     return schedule
 
 #create teacher-course tuples
-def create_tuples(teacher_availability,schedule):
+def create_tuples(connection, cursor):
+    cursor.execute("SELECT teacher_name, course_1 FROM teacher_availability where course_1 IS NOT NULL ")
+    info = cursor.fetchall()
+    temp = [(teacher_name, course_1) for teacher_name, course_1 in info]
+    teacher_course_tuples = temp
 
-    return schedule
+    cursor.execute("SELECT teacher_name, course_2 FROM teacher_availability where course_2 IS NOT NULL ")
+    info = cursor.fetchall()
+    temp = [(teacher_name, course_2) for teacher_name, course_2 in info]
+    teacher_course_tuples.extend(temp)
 
-initial = create_matrix(6,10)
-filled = create_tuples('teacher_availability.db',initial)
-print(filled)
+    cursor.execute("SELECT teacher_name, course_3 FROM teacher_availability where course_3 IS NOT NULL ")
+    info = cursor.fetchall()
+    temp = [(teacher_name, course_3) for teacher_name, course_3 in info]
+    teacher_course_tuples.extend(temp)
+
+    cursor.execute("SELECT teacher_name, course_4 FROM teacher_availability where course_4 IS NOT NULL ")
+    info = cursor.fetchall()
+    temp = [(teacher_name, course_4) for teacher_name, course_4 in info]
+    teacher_course_tuples.extend(temp)
+
+    return teacher_course_tuples
