@@ -50,11 +50,10 @@ def insert_data(connection,cursor,info_list):
     except sqlite3.Error as e:
         print(f"An error occured: {e}")
 
-
-
-def function_tobedefined(conn, cursor):
+#display all data
+def display_all(connection,cursor):
     # Retrieve data from the table
-    cursor.execute("SELECT * FROM users")
+    cursor.execute('SELECT * FROM teacher_availability')
     rows = cursor.fetchall()
 
     # Display retrieved data
