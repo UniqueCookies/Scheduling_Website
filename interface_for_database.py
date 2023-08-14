@@ -7,13 +7,13 @@ connection,cursor = connect_database()
 
 #database.py test
 #create_table()
-#info_list = [103,'Devin',0,0,1,1,1,1,'History','English','Math','Chemistry']
-#insert_data(connection,cursor,info_list)
-#delete_row(connection,cursor,identification)
-#display_all(connection,cursor)
-course_list,num_classes = get_unique_classes()
-print(course_list)
-print(num_classes)
+#info_list = [104,'To_be_Deleted',0,0,1,1,1,1,'History','English','Math','Chemistry']
+#insert_data(info_list)
+#identification = 104
+#delete_row(identification)
+#display_all()
+#course_list,num_classes = get_unique_classes()
+
 
 #info.py test
 #print(create_tuples(cursor))

@@ -27,8 +27,9 @@ def create_table():
                   )
                   ''')
     close_connection(cursor,connection)
-def insert_data(connection,cursor,info_list):
+def insert_data(info_list):
     # Insert data into the table
+    connection, cursor = connect_database()
     identification, teacher_name, period_1, period_2, period_3, period_4, period_5, period_6, course_1, course_2, course_3, course_4 = info_list
     query = '''
                     INSERT INTO teacher_availability
@@ -50,9 +51,10 @@ def insert_data(connection,cursor,info_list):
         connection.commit()
     except sqlite3.Error as e:
         print(f"An error occured: {e}")
-
+    close_connection(cursor, connection)
 #display all data
-def display_all(connection,cursor):
+def display_all():
+    connection, cursor = connect_database()
     # Retrieve data from the table
     cursor.execute('SELECT * FROM teacher_availability')
     rows = cursor.fetchall()
@@ -63,8 +65,9 @@ def display_all(connection,cursor):
             print(row)
     else:
         print("Error: The table is empty")
-
-def delete_row(connection,cursor,identification):
+    close_connection(cursor, connection)
+def delete_row(identification):
+    connection, cursor = connect_database()
     query = f"DELETE FROM teacher_availability WHERE identification = ?"
     cursor.execute(query, (identification,))
 
@@ -75,6 +78,7 @@ def delete_row(connection,cursor,identification):
     else:
         connection.rollback()
         print(f"Error: {identification} does not exist")
+    close_connection(cursor, connection)
 
 #get unique classes from the databse -> will use it to create the num_of_col for the matrix
 def get_unique_classes():
