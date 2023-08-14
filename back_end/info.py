@@ -6,7 +6,8 @@ def create_matrix(num_period, num_classes):
     return schedule
 
 #create teacher-course tuples
-def create_tuples(connection, cursor):
+def create_tuples(cursor):
+
     cursor.execute("SELECT teacher_name, course_1 FROM teacher_availability where course_1 IS NOT NULL ")
     info = cursor.fetchall()
     temp = [(teacher_name, course_1) for teacher_name, course_1 in info]
@@ -28,3 +29,5 @@ def create_tuples(connection, cursor):
     teacher_course_tuples.extend(temp)
 
     return teacher_course_tuples
+
+#sort the into three list

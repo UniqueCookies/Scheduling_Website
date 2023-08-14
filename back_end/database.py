@@ -5,9 +5,10 @@ import sqlite3
 def connect_database():
     connection = sqlite3.connect('database/teacher_availability.db')
     cursor = connection.cursor()
-    return connection, cursor, True
+    return connection, cursor
 
-def create_table(cursor):
+def create_table():
+    connection,cursor=connect_database()
     cursor.execute('''
                 CREATE TABLE IF NOT EXISTS teacher_availability
                   ( 
@@ -25,7 +26,7 @@ def create_table(cursor):
                     course_4 TEXT
                   )
                   ''')
-
+    close_connection(cursor,connection)
 def insert_data(connection,cursor,info_list):
     # Insert data into the table
     identification, teacher_name, period_1, period_2, period_3, period_4, period_5, period_6, course_1, course_2, course_3, course_4 = info_list
