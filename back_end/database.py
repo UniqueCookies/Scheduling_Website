@@ -3,7 +3,7 @@ import sqlite3
 # Connect to the SQLite database (creates a new database if it doesn't exist)
 # Create a cursor object to interact with the database
 def connect_database():
-    connection = sqlite3.connect('database/teacher_availability.db')
+    connection = sqlite3.connect("database/teacher_availability.db")
     cursor = connection.cursor()
     return connection, cursor
 
@@ -102,13 +102,17 @@ def get_unique_classes():
     close_connection(cursor, connection)
     return course_list,num_classes
 
-#get the teacher/class pairs from the database
+#get the teacher/class pairs from the database and return the list
 def get_teacher_course_list():
     connection, cursor = connect_database()
     query = '''
     SELECT teacher_name, course_1 FROM teacher_availability where course_1 IS NOT NULL
     UNION 
     SELECT teacher_name, course_2 FROM teacher_availability where course_2 IS NOT NULL
+    UNION 
+    SELECT teacher_name, course_3 FROM teacher_availability where course_3 IS NOT NULL
+    UNION
+    SELECT teacher_name, course_4 FROM teacher_availability where course_4 IS NOT NULL
     '''
 
     cursor.execute(query)
