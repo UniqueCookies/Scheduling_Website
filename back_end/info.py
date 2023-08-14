@@ -8,25 +8,15 @@ def create_matrix(num_period, num_classes):
 #create teacher-course tuples
 def create_tuples(cursor):
 
-    cursor.execute("SELECT teacher_name, course_1 FROM teacher_availability where course_1 IS NOT NULL ")
-    info = cursor.fetchall()
-    temp = [(teacher_name, course_1) for teacher_name, course_1 in info]
-    teacher_course_tuples = temp
+    query = '''
+    SELECT teacher_name, course_1 FROM teacher_availability where course_1 IS NOT NULL
+    UNION 
+    SELECT teacher_name, course_2 FROM teacher_availability where course_2 IS NOT NULL
+    '''
 
-    cursor.execute("SELECT teacher_name, course_2 FROM teacher_availability where course_2 IS NOT NULL ")
-    info = cursor.fetchall()
-    temp = [(teacher_name, course_2) for teacher_name, course_2 in info]
-    teacher_course_tuples.extend(temp)
+    info = cursor.execute(query)
 
-    cursor.execute("SELECT teacher_name, course_3 FROM teacher_availability where course_3 IS NOT NULL ")
-    info = cursor.fetchall()
-    temp = [(teacher_name, course_3) for teacher_name, course_3 in info]
-    teacher_course_tuples.extend(temp)
-
-    cursor.execute("SELECT teacher_name, course_4 FROM teacher_availability where course_4 IS NOT NULL ")
-    info = cursor.fetchall()
-    temp = [(teacher_name, course_4) for teacher_name, course_4 in info]
-    teacher_course_tuples.extend(temp)
+    teacher_course_tuples = 0
 
     return teacher_course_tuples
 

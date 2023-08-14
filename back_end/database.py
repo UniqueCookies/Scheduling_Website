@@ -102,6 +102,21 @@ def get_unique_classes():
     close_connection(cursor, connection)
     return course_list,num_classes
 
+#get the teacher/class pairs from the database
+def get_teacher_course_list():
+    connection, cursor = connect_database()
+    query = '''
+    SELECT teacher_name, course_1 FROM teacher_availability where course_1 IS NOT NULL
+    UNION 
+    SELECT teacher_name, course_2 FROM teacher_availability where course_2 IS NOT NULL
+    '''
+
+    cursor.execute(query)
+    info = cursor.fetchall()
+    teacher_course_tuple = [row for row in info]
+    close_connection(cursor, connection)
+
+    return teacher_course_tuple
  # Close the cursor and connection
 def close_connection(cursor,connection):
     cursor.close()

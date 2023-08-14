@@ -12,11 +12,13 @@ connection,cursor = connect_database()
 #identification = 104
 #delete_row(identification)
 #display_all()
-#course_list,num_classes = get_unique_classes()
+course_list,num_classes = get_unique_classes()
 
 
 #info.py test
-#print(create_tuples(cursor))
+num_period = 4
+create_matrix(num_period,num_classes)
+print(get_teacher_course_list())
 
 
 
