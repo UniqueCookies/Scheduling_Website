@@ -77,15 +77,25 @@ def delete_row(connection,cursor,identification):
         print(f"Error: {identification} does not exist")
 
 #get unique classes from the databse -> will use it to create the num_of_col for the matrix
-def get_unique_classes(connection,cursor):
-    cursor.execute('SELECT DISTINCT course_1,course_2,course_3,course_4 from teacher_availability')
+def get_unique_classes():
+    connection, cursor = connect_database()
+    query = '''
+        SELECT DISTINCT course_1 from teacher_availability'
+        UNION 
+        SELECT DISTINCT course_2 from teacher_availability'
+        UNION
+        SELECT DISTINCT course_3 from teacher_availability'
+        UNION
+        SELECT DISTINCT course_4 from teacher_availability' ; 
+     '''
+
+    cursor.execute(query)
     info = cursor.fetchall()
 
-    course_list = []
-    for row in info:
-        course_list.append(row)
+    course_list = [row[0] for row in info]
 
     num_classes = len(course_list)
+    close_connection(cursor, connection)
     return course_list,num_classes
 
  # Close the cursor and connection

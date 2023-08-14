@@ -11,7 +11,7 @@ connection,cursor = connect_database()
 #insert_data(connection,cursor,info_list)
 #delete_row(connection,cursor,identification)
 #display_all(connection,cursor)
-course_list,num_classes = get_unique_classes(connection,cursor)
+course_list,num_classes = get_unique_classes()
 print(course_list)
 print(num_classes)
 
