@@ -1,7 +1,14 @@
-from scheduling_website.back_end.database import *
-from scheduling_website.back_end.info import *
-from scheduling_website.back_end.algorithm import *
-from scheduling_website.back_end.teacher_database import *
+from scheduling_website.back_end.teacher.teacher_database import *
+from scheduling_website.back_end.course.course import *
+
+#class portion test
+teacher_info = retrieve_teacher_info('Sally')
+course = Course("Mathematics",teacher_info, 0, "10th")
+# Display course information
+print(course)
+
+
+
 
 '''''''''
 #database.py test

@@ -1,0 +1,1 @@
+from scheduling_website.back_end.course.course import Course

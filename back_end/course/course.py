@@ -1,4 +1,4 @@
-from scheduling_website.back_end.teacher import Teacher
+from scheduling_website.back_end.teacher.teacher import Teacher
 
 # class_type will be an add-on feature for later where two coures need to be combined together.
 # grade level indicate which section this course can be taught in

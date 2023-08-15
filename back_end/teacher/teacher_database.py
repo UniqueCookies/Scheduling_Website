@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from scheduling_website.back_end.teacher import Teacher
+from scheduling_website.back_end.teacher.teacher import Teacher
 #teacher database connections
 def connect_database():
     connection = sqlite3.connect("database/teacher_information.db")
