@@ -8,6 +8,14 @@ class Teacher:
     def __str__(self):
         return f"Teacher: {self.name}\nAvailability: {self.availability}\nPreference: {self.preference}"
 
+
+
+
+
+
+
+
+# Database related Operations
 #teacher database connections
 def connect_database():
     connection = sqlite3.connect("database/teacher_information.db")
@@ -16,7 +24,6 @@ def connect_database():
 def close_connection(cursor,connection):
     cursor.close()
     connection.close()
-
 #add teacher info to the database
 def add_teacher(teacher_info):
     connection,cursor = connect_database()
