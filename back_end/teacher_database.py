@@ -1,21 +1,6 @@
 import sqlite3
 import json
-class Teacher:
-    def __init__(self, name, availability, preference):
-        self.name = name
-        self.availability = availability
-        self.preference = preference
-    def __str__(self):
-        return f"Teacher: {self.name}\nAvailability: {self.availability}\nPreference: {self.preference}"
-
-
-
-
-
-
-
-
-# Database related Operations
+from scheduling_website.back_end.teacher import Teacher
 #teacher database connections
 def connect_database():
     connection = sqlite3.connect("database/teacher_information.db")

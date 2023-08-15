@@ -1,7 +1,7 @@
 from scheduling_website.back_end.database import *
 from scheduling_website.back_end.info import *
 from scheduling_website.back_end.algorithm import *
-from scheduling_website.back_end.teacher_object import *
+from scheduling_website.back_end.teacher_database import *
 
 '''''''''
 #database.py test
@@ -31,11 +31,11 @@ print(sally)
 add_teacher(sally)
 display_all_teacher_information()
 #delete_teacher_info('Devin')
-'''''''''
 teacher_info = retrieve_teacher_info('Sally')
 if teacher_info is not None:
     print(teacher_info)
 else:
     print("Teacher not found")
+'''''''''
 
 
