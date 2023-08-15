@@ -11,10 +11,11 @@ from scheduling_website.back_end.info import *
 #display_all()
 course_list,num_classes = get_unique_classes()
 
-
 #info.py test
 num_period = 4
-create_matrix(num_period,num_classes)
-print(get_teacher_course_list())
+num_section = 2
+population= create_matrix(num_period,num_section)
+list = get_teacher_course_list()
+print(random_list(list,population))
 
 

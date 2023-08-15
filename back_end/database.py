@@ -84,13 +84,13 @@ def delete_row(identification):
 def get_unique_classes():
     connection, cursor = connect_database()
     query = '''
-        SELECT DISTINCT course_1 from teacher_availability'
+        SELECT DISTINCT course_1 from teacher_availability
         UNION 
-        SELECT DISTINCT course_2 from teacher_availability'
+        SELECT DISTINCT course_2 from teacher_availability
         UNION
-        SELECT DISTINCT course_3 from teacher_availability'
+        SELECT DISTINCT course_3 from teacher_availability
         UNION
-        SELECT DISTINCT course_4 from teacher_availability' ; 
+        SELECT DISTINCT course_4 from teacher_availability
      '''
 
     cursor.execute(query)
