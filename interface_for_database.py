@@ -32,4 +32,10 @@ add_teacher(sally)
 display_all_teacher_information()
 #delete_teacher_info('Devin')
 '''''''''
+teacher_info = retrieve_teacher_info('Sally')
+if teacher_info is not None:
+    print(teacher_info)
+else:
+    print("Teacher not found")
+
 

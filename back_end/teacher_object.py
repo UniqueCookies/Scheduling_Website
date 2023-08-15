@@ -85,3 +85,27 @@ def delete_teacher_info(name):
         connection.rollback()
         print(f"Error: {name} does not exist")
     close_connection(cursor, connection)
+#Retrieve teacher info from the database into the object
+def retrieve_teacher_info(name):
+
+    #fetch data
+    connection, cursor = connect_database()
+    query = '''
+    select * from teacher_information where teacher_name =?
+    '''
+    try:
+        cursor.execute(query,(name,))
+    except sqlite3.Error as e:
+        print(f"An error occured: {e}")
+    teacher_data = cursor.fetchone()
+    close_connection(cursor,connection)
+
+    #turn it back to the
+    if teacher_data:
+        id, teacher_name, availability_json, preference_json = teacher_data
+        availability = json.loads(availability_json)
+        preference = json.loads(preference_json)
+        teacher = Teacher(teacher_name, availability, preference)
+        return teacher
+    else:
+        return None
