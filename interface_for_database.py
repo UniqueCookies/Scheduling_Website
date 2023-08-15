@@ -1,5 +1,6 @@
 from scheduling_website.back_end.database import *
 from scheduling_website.back_end.info import *
+from scheduling_website.back_end.algorithm import *
 
 
 #database.py test
