@@ -5,13 +5,14 @@ from scheduling_website.back_end.course.course_database import *
 teacher_name = 'Devin'
 course = Course("Chemistry",teacher_name, 0, 10)
 # Display course information
-add_course(course)
+#add_course(course)
 
 course_name = 'Chemistry'
-teacher_name = 'Tommy'
-delete_course_info(course_name,teacher_name)
-
-display_all_course_information()
+teacher_name = 'Sally'
+#delete_course_info(course_name,teacher_name)
+#display_all_course_information()
+course = retrieve_course_info(course_name,teacher_name)
+print(course)
 
 '''''''''
 #database.py test

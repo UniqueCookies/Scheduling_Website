@@ -1,4 +1,6 @@
 from scheduling_website.back_end.course.course import Course
+from scheduling_website.back_end.teacher.teacher_database import retrieve_teacher_info
+
 import sqlite3
 def connect_database():
     connection = sqlite3.connect("database/course_information.db")
@@ -69,3 +71,23 @@ def delete_course_info(course_name,teacher_name):
         connection.rollback()
         print(f"Error: {course_name} with {teacher_name} does not exist")
     close_connection(cursor, connection)
+def retrieve_course_info(course_name,teacher_name):
+    connection, cursor = connect_database()
+    query = '''
+        select * from course_information where course_name =? AND teacher_name =?
+        '''
+    try:
+        cursor.execute(query, (course_name,teacher_name))
+    except sqlite3.Error as e:
+        print(f"An error occured: {e}")
+    course_data = cursor.fetchone()
+    close_connection(cursor, connection)
+
+    if course_data:
+        id, course_name, teacher_name,course_type,grade_level = course_data
+        course_data = Course(course_name, teacher_name,course_type,grade_level)
+    else:
+        return None
+
+
+    return course_data
