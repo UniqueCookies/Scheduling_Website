@@ -14,11 +14,13 @@ def add_course(course_info):
     query = '''
         CREATE TABLE IF NOT EXISTS course_information
         (
-            course_name TEXT PRIMARY KEY NOT NULL,
+            id INTEGER PRIMARY KEY,
+            course_name TEXT NOT NULL,
             teacher_name TEXT, --this is the foreign key
             course_type INTEGER,
             grade_level INTEGER,
             FOREIGN KEY (teacher_name) REFERENCES teacher_information(teacher_name)
+            UNIQUE (course_name,teacher_name)
         )       
     '''
     cursor.execute(query)

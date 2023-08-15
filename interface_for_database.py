@@ -2,8 +2,8 @@ from scheduling_website.back_end.teacher.teacher_database import *
 from scheduling_website.back_end.course.course_database import *
 
 #class portion test
-teacher_name = 'Sally'
-course = Course("Mathematics",teacher_name, 0, 10)
+teacher_name = 'Devin'
+course = Course("Chemistry",teacher_name, 0, 10)
 # Display course information
 add_course(course)
 
