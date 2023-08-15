@@ -21,11 +21,15 @@ list = get_teacher_course_list()
 print(random_list(list,population))
 '''''''''''
 
-# Example usage
-teacher_name = "Sally"
-teacher_availability = [1, 1, 0, 0, 1, 1]  # Example availability for each day/time
+# Testing teacher_object functions
+'''''''''
+teacher_name = "Devin"
+teacher_availability = [0, 0, 1, 1, 1, 1]  # Example availability for each day/time
 teacher_preference = [0, 0, 0, 0, 0, 0]  # Example preference for each day/time
 sally = Teacher(teacher_name,teacher_availability,teacher_preference)
 print(sally)
-
 add_teacher(sally)
+'''''''''
+display_all_teacher_information()
+#delete_teacher_info('Devin')
+

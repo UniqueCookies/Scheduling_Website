@@ -8,11 +8,15 @@ class Teacher:
     def __str__(self):
         return f"Teacher: {self.name}\nAvailability: {self.availability}\nPreference: {self.preference}"
 
-#teacher database
+#teacher database connections
 def connect_database():
     connection = sqlite3.connect("database/teacher_information.db")
     cursor = connection.cursor()
     return connection, cursor
+def close_connection(cursor,connection):
+    cursor.close()
+    connection.close()
+
 #add teacher info to the database
 def add_teacher(teacher_info):
     connection,cursor = connect_database()
@@ -22,7 +26,7 @@ def add_teacher(teacher_info):
         CREATE TABLE IF NOT EXISTS teacher_information
         (
             id INTEGER PRIMARY KEY,
-            teacher_name TEXT,
+            teacher_name TEXT UNIQUE,
             availability TEXT,
             preference TEXT
         )       
@@ -47,5 +51,30 @@ def add_teacher(teacher_info):
     except sqlite3.Error as e:
         print(f"An error occured: {e}")
 
-    cursor.close()
-    connection.close()
+    close_connection(cursor,connection)
+#display all teachers
+def display_all_teacher_information():
+    connection, cursor = connect_database()
+    # Retrieve data from the table
+    cursor.execute('SELECT * FROM teacher_information')
+    rows = cursor.fetchall()
+
+    # Display retrieved data
+    if len(rows)>0:
+        for row in rows:
+            print(row)
+    else:
+        print("Error: The table is empty")
+    close_connection(cursor, connection)
+def delete_teacher_info(name):
+    connection, cursor = connect_database()
+    query = f"DELETE FROM teacher_information WHERE teacher_name = ?"
+    cursor.execute(query, (name,))
+
+    if cursor.rowcount>0:
+        connection.commit()
+        print("delete is successful")
+    else:
+        connection.rollback()
+        print(f"Error: {name} does not exist")
+    close_connection(cursor, connection)
