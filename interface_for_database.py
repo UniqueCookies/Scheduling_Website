@@ -1,11 +1,11 @@
 from scheduling_website.back_end.teacher.teacher_database import *
-from scheduling_website.back_end.course.course import *
+from scheduling_website.back_end.course.course_database import *
 
 #class portion test
-teacher_info = retrieve_teacher_info('Sally')
-course = Course("Mathematics",teacher_info, 0, "10th")
+teacher_name = 'Sally'
+course = Course("Mathematics",teacher_name, 0, 10)
 # Display course information
-print(course)
+add_course(course)
 
 
 
@@ -29,9 +29,9 @@ print(random_list(list,population))
 '''''''''''
 
 # Testing teacher_object functions
-'''''''''
-teacher_name = "Devin"
-teacher_availability = [0, 0, 1, 1, 1, 1]  # Example availability for each day/time
+'''''''''''
+teacher_name = "Tommy"
+teacher_availability = [1, 1, 1, 1, 0, 0]  # Example availability for each day/time
 teacher_preference = [0, 0, 0, 0, 0, 0]  # Example preference for each day/time
 sally = Teacher(teacher_name,teacher_availability,teacher_preference)
 print(sally)
@@ -43,6 +43,6 @@ if teacher_info is not None:
     print(teacher_info)
 else:
     print("Teacher not found")
-'''''''''
+'''''''''''
 
 

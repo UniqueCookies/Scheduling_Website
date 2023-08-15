@@ -17,8 +17,7 @@ def add_teacher(teacher_info):
     query = '''
         CREATE TABLE IF NOT EXISTS teacher_information
         (
-            id INTEGER PRIMARY KEY,
-            teacher_name TEXT UNIQUE,
+            teacher_name TEXT PRIMARY KEY NOT NULL,
             availability TEXT,
             preference TEXT
         )       
@@ -87,7 +86,7 @@ def retrieve_teacher_info(name):
 
     #turn it back to the
     if teacher_data:
-        id, teacher_name, availability_json, preference_json = teacher_data
+        teacher_name, availability_json, preference_json = teacher_data
         availability = json.loads(availability_json)
         preference = json.loads(preference_json)
         teacher = Teacher(teacher_name, availability, preference)

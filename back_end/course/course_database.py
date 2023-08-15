@@ -14,29 +14,25 @@ def add_course(course_info):
     query = '''
         CREATE TABLE IF NOT EXISTS course_information
         (
-            id INTEGER PRIMARY KEY,
-            course_name TEXT UNIQUE,
-            teacher_name TEXT,
-            availability TEXT,
-            preference TEXT
+            course_name TEXT PRIMARY KEY NOT NULL,
+            teacher_name TEXT, --this is the foreign key
+            course_type INTEGER,
+            grade_level INTEGER,
+            FOREIGN KEY (teacher_name) REFERENCES teacher_information(teacher_name)
         )       
     '''
     cursor.execute(query)
 
-    #change list to JSON strings
-    availability_json = json.dumps(teacher_info.availability)
-    preference_json = json.dumps(teacher_info.preference)
-
     #add info into the database
     query = '''
-        INSERT INTO teacher_information
-        (teacher_name, availability, preference)
+        INSERT INTO course_information
+        (course_name, teacher_name,course_type,grade_level)
         VALUES
-        (?,?,?)
+        (?,?,?,?)
     '''
 
     try:
-        cursor.execute(query,(teacher_info.name,availability_json,preference_json ))
+        cursor.execute(query,(course_info.course_name, course_info.teacher_name, course_info.class_type, course_info.grade_level))
         connection.commit()
     except sqlite3.Error as e:
         print(f"An error occured: {e}")
