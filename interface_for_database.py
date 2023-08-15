@@ -1,7 +1,7 @@
 from scheduling_website.back_end.database import *
 from scheduling_website.back_end.info import *
 from scheduling_website.back_end.algorithm import *
-from scheduling_website.back_end.object import *
+from scheduling_website.back_end.teacher_object import *
 
 '''''''''
 #database.py test
