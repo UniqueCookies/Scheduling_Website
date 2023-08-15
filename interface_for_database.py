@@ -2,17 +2,18 @@ from scheduling_website.back_end.teacher.teacher_database import *
 from scheduling_website.back_end.course.course_database import *
 
 #class_database portion test
+'''''''''
 teacher_name = 'Devin'
 course = Course("Chemistry",teacher_name, 0, 10)
 # Display course information
 #add_course(course)
-
 course_name = 'Chemistry'
-teacher_name = 'Sally'
+teacher_name = 'Tommy'
 #delete_course_info(course_name,teacher_name)
 #display_all_course_information()
 course = retrieve_course_info(course_name,teacher_name)
 print(course)
+'''''''''
 
 '''''''''
 #database.py test
