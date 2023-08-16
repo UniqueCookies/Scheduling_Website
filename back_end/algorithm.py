@@ -1,6 +1,8 @@
-from scheduling_website.back_end.potential_useless_files.info import *
+from scheduling_website.back_end.schedule import *
 
-#Generate random list of schedules
+def create_population(num_of_population):
 
+
+    return 1
 
 

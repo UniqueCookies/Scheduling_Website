@@ -2,6 +2,13 @@ from scheduling_website.back_end.schedule import *
 from scheduling_website.back_end.course.course_database import *
 from scheduling_website.back_end.teacher.teacher_database import *
 
+#test algorithm.py
+
+
+
+
+
+'''''''''
 #schedule test
 # Creating a Schedule object with a 3x4 matrix
 course_key= get_course_key_list()
@@ -13,6 +20,7 @@ print(count)
 #print(schedule)
 # Displaying the matrix within the Schedule object
 #print(schedule)
+'''''''''
 
 #class_database portion test
 '''''''''
