@@ -3,13 +3,12 @@ from scheduling_website.back_end.course.course_database import *
 
 #schedule test
 # Creating a Schedule object with a 3x4 matrix
-schedule = Schedule(2, 6,[10,10])   #2 sections, 6 periods  --> input by the user
+course_key= get_course_key_list()
+schedule = Schedule(2, 6,[10,10],course_key)   #2 sections, 6 periods  --> input by the user
 #schedule.initialize_schedule()
-course_key = get_course_key_list()
-print(course_key)
-new_key= random_course_key_list(course_key)
-print(course_key)
-print(new_key)
+print(schedule)
+schedule.initialize_schedule()
+print(schedule)
 
 # Displaying the matrix within the Schedule object
 #print(schedule)
