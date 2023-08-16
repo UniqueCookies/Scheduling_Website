@@ -4,7 +4,7 @@ from scheduling_website.back_end.teacher.teacher_database import *
 from scheduling_website.back_end.algorithm import *
 
 #test algorithm.py
-population = create_population(5,2,6,[10,10])
+population = create_population(100,2,6,[10,10])
 
 
 
