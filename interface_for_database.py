@@ -8,11 +8,6 @@ schedule = Schedule(2, 6,[10,10],course_key,0)   #2 sections, 6 periods  --> inp
 #schedule.initialize_schedule()
 #schedule.initialize_schedule()
 print(schedule)
-answer=check_hcs_repeating_course(12,2)
-if(answer):
-    print("match")
-else:
-    print("not match")
 
 # Displaying the matrix within the Schedule object
 #print(schedule)

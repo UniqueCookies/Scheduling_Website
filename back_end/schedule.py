@@ -28,5 +28,6 @@ class Schedule:
     def hard_constraint(self):
         count = 0
         def repeating_class():
+
             count =0
         return count
