@@ -124,16 +124,21 @@ def check_hcs_repeating_course(key1,key2):
     #compare
     return (name1==name2)
 
-def retrieve_teacher_name(id):
+def check_hcs_repeating_teacher(key1,key2):
+
+    #get teacher_name from the table
     connection, cursor = connect_database()
-    query = '''
-     select teacher_name from course_information where id =?
-     '''
-    try:
-        cursor.execute(query, (id,))
-        teacher_name = cursor.fetchone()
-        return teacher_name[0] if teacher_name else None
-    except sqlite3.Error as e:
-        print(f"An error occured: {e}")
-    finally:
-        close_connection(cursor, connection)
+    cursor.execute("select teacher_name from course_information where id=?", (key1,))
+    name1 = cursor.fetchone()
+    name1 = name1[0]
+    cursor.execute("select teacher_name from course_information where id=?", (key2,))
+    name2 = cursor.fetchone()
+    name2 = name2[0]
+    close_connection(cursor, connection)
+
+    print(name1,name2)
+
+    if name1 is not None and name2 is not None:
+        return (name1 == name2)
+    else:
+        print("One of the name does not exist")

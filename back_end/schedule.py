@@ -29,7 +29,8 @@ class Schedule:
     def hard_constraint(self):
         count = 0
         # checking if the same class is being taught more than once for each section
-        def repeating_class(count):
+        def repeating_class():
+            count =0
             for section in range(self.num_of_sections):
                 for period1, period2 in itertools.combinations(range(self.num_of_period), 2):
                     key1 =self.matrix[section][period1]
@@ -38,19 +39,23 @@ class Schedule:
                         count = count+1
 
             return count
-        count = repeating_class(count)
+        class_repeat = repeating_class()
+        print(f"Repeating class hcs is:{class_repeat}")
 
         # checking if the teacher is assigned to teach more than one class in the same period
-        def repeating_teacher(count):
+        def repeating_teacher():
+            count =0
             for period in range(self.num_of_period):
-                for section in range(self.num_of_sections):
-                    count =0
+                for section1,section2 in itertools.combinations(range(self.num_of_sections),2):
+                    key1 = self.matrix[section1][period]
+                    key2 = self.matrix[section2][period]
+                    if check_hcs_repeating_teacher(key1,key2):
+                            count +=1
             return count
+        teacher_repeat = repeating_teacher()
+        print(f"Repeating teacher hcs is:{teacher_repeat}")
 
-
-        #count = repeating_teacher(count)
-
-
-        self.hcs = count
-        return count
+        final_count = class_repeat+teacher_repeat
+        self.hcs = final_count
+        return final_count
 
