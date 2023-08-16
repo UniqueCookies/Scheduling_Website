@@ -4,10 +4,9 @@ from scheduling_website.back_end.course.course_database import *
 #schedule test
 # Creating a Schedule object with a 3x4 matrix
 course_key= get_course_key_list()
-schedule = Schedule(2, 6,[10,10],course_key)   #2 sections, 6 periods  --> input by the user
+schedule = Schedule(2, 6,[10,10],course_key,0)   #2 sections, 6 periods  --> input by the user
 #schedule.initialize_schedule()
-print(schedule)
-schedule.initialize_schedule()
+#schedule.initialize_schedule()
 print(schedule)
 
 # Displaying the matrix within the Schedule object
