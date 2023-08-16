@@ -1,3 +1,17 @@
+Program Glossory:
+course folder: contain course class, and function related to its database
+teacher folder: contain teacher class, and function related to its database
+potential_useless_file: may not be of use due to use of "class"
+schedule: schedule class with its ability to generate its own schedule and calculate hard constraints
+
+progress:
+able to generate initial schedule and check for its hard constraints
+next step: will implement genetic algorithm (basic version) in the algorithm portion
+
+
+
+
+
 What is this project for: 
 K-12 principles can use this program to create their master's schedule for the school year. 
 It is a work in progress.
