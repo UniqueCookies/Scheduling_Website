@@ -1,4 +1,5 @@
 from scheduling_website.back_end.course.course_database import *
+import itertools
 class Schedule:
     def __init__(self, num_of_sections, num_of_period,grade_level_list,course_key,hcs):
         self.num_of_sections = num_of_sections  #rows/what are course sections
@@ -30,12 +31,11 @@ class Schedule:
         # checking if the same class is being taught more than once for each section
         def repeating_class(count):
             for section in range(self.num_of_sections):
-                for period in range(self.num_of_period):
-                    key1 =self.matrix[section][period]  #get keys1
-                    for compare_key in range(period+1,self.num_of_period):
-                        key2 = self.matrix[section][compare_key]
-                        if check_hcs_repeating_course(key1, key2):  #same course name means the section gets the same class twice
-                            count = count+1
+                for period1, period2 in itertools.combinations(range(self.num_of_period), 2):
+                    key1 =self.matrix[section][period1]
+                    key2 = self.matrix[section][period2]
+                    if check_hcs_repeating_course(key1, key2):  #same course name means the section gets the same class twice
+                        count = count+1
 
             return count
         count = repeating_class(count)
@@ -48,7 +48,7 @@ class Schedule:
             return count
 
 
-        count = repeating_teacher(count)
+        #count = repeating_teacher(count)
 
 
         self.hcs = count

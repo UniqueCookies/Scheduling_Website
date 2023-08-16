@@ -9,7 +9,7 @@ schedule = Schedule(2, 6,[10,10],course_key,0)   #2 sections, 6 periods  --> inp
 schedule.initialize_schedule()
 print(schedule)
 count = schedule.hard_constraint()
-#print(count)
+print(count)
 #print(schedule)
 # Displaying the matrix within the Schedule object
 #print(schedule)
