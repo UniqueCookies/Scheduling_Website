@@ -1,4 +1,5 @@
 from scheduling_website.back_end.course.course_database import *
+from scheduling_website.back_end.teacher.teacher_database import *
 import itertools
 class Schedule:
     def __init__(self, num_of_sections, num_of_period,grade_level_list,course_key,hcs):
@@ -40,7 +41,7 @@ class Schedule:
 
             return count
         class_repeat = repeating_class()
-        print(f"Repeating class hcs is:{class_repeat}")
+        #print(f"Repeating class hcs is:{class_repeat}")
 
         # checking if the teacher is assigned to teach more than one class in the same period
         def repeating_teacher():
@@ -53,12 +54,23 @@ class Schedule:
                             count +=1
             return count
         teacher_repeat = repeating_teacher()
-        print(f"Repeating teacher hcs is:{teacher_repeat}")
+        #print(f"Repeating teacher hcs is:{teacher_repeat}")
 
         #check if it violates the teacher's availability schedule
+        def violate_availability():
+            count = 0
+            for section in range(self.num_of_sections):
+                for period in range(self.num_of_period):
+                    key = self.matrix[section][period]
+                    teacher_name = retrieve_teacher_name(key)       #get teacher name
+                    if check_availability(teacher_name, period) is not True:
+                        count +=1
+            return count
 
+        violation = violate_availability()
+        #print(f"Teacher availability violation hcs is:{violation}")
 
-        final_count = class_repeat+teacher_repeat
+        final_count = class_repeat+teacher_repeat+violation
         self.hcs = final_count
         return final_count
 

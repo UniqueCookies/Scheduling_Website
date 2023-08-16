@@ -93,3 +93,16 @@ def retrieve_teacher_info(name):
         return teacher
     else:
         return None
+
+#check if the teacher is availble during the assigned period:
+def check_availability(name,period):
+    #get availability information from the database
+    teacher = retrieve_teacher_info(name)
+    if period<len(teacher.availability):
+        availability = teacher.availability[period]
+        if availability != 0:
+            return True
+        else:
+            return False
+    else:
+        return None

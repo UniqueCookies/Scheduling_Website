@@ -10,7 +10,7 @@ schedule.initialize_schedule()
 print(schedule)
 count = schedule.hard_constraint()
 print(count)
-print(schedule)
+#print(schedule)
 # Displaying the matrix within the Schedule object
 #print(schedule)
 
