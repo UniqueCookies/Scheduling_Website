@@ -7,8 +7,9 @@ schedule = Schedule(2, 6,[10,10])   #2 sections, 6 periods  --> input by the use
 #schedule.initialize_schedule()
 course_key = get_course_key_list()
 print(course_key)
-random_course_key_list(course_key)
+new_key= random_course_key_list(course_key)
 print(course_key)
+print(new_key)
 
 # Displaying the matrix within the Schedule object
 #print(schedule)

@@ -105,5 +105,5 @@ def get_course_key_list():
     close_connection(cursor,connection)
     return course_key_list
 def random_course_key_list(course_key_list):
-    random.shuffle(course_key_list)
-    return course_key_list
+    new_list = random.sample(course_key_list,len(course_key_list))
+    return new_list
