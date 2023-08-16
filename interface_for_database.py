@@ -1,5 +1,13 @@
 from scheduling_website.back_end.teacher.teacher_database import *
 from scheduling_website.back_end.course.course_database import *
+from scheduling_website.back_end.schedule import *
+
+#schedule test
+# Creating a Schedule object with a 3x4 matrix
+schedule = Schedule(3, 4)
+
+# Displaying the matrix within the Schedule object
+schedule.display()
 
 #class_database portion test
 '''''''''
