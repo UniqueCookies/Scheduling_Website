@@ -55,6 +55,9 @@ class Schedule:
         teacher_repeat = repeating_teacher()
         print(f"Repeating teacher hcs is:{teacher_repeat}")
 
+        #check if it violates the teacher's availability schedule
+
+
         final_count = class_repeat+teacher_repeat
         self.hcs = final_count
         return final_count

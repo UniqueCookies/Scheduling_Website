@@ -125,7 +125,6 @@ def check_hcs_repeating_course(key1,key2):
     return (name1==name2)
 
 def check_hcs_repeating_teacher(key1,key2):
-
     #get teacher_name from the table
     connection, cursor = connect_database()
     cursor.execute("select teacher_name from course_information where id=?", (key1,))
@@ -136,9 +135,8 @@ def check_hcs_repeating_teacher(key1,key2):
     name2 = name2[0]
     close_connection(cursor, connection)
 
-    print(name1,name2)
-
+    #check if the teacher is overbooked
     if name1 is not None and name2 is not None:
         return (name1 == name2)
     else:
-        print("One of the name does not exist")
+        return None
