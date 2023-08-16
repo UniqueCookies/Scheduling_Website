@@ -12,8 +12,8 @@ class Schedule:
     def __str__(self):
         for row in self.matrix:
             print(row)
-        return f"The column name is: {self.grade_level_list}\nThe course_key is: {self.course_key}\nThe number of hard constraints is: {self.hcs}"
-
+        #return f"The column name is: {self.grade_level_list}\nThe course_key is: {self.course_key}\nThe number of hard constraints is: {self.hcs}"
+        return f"The number of hard constraints is: {self.hcs}\n"
     #random generate schedule
     def initialize_schedule(self):
         course_key = random_course_key_list(self.course_key)
@@ -73,4 +73,8 @@ class Schedule:
         final_count = class_repeat+teacher_repeat+violation
         self.hcs = final_count
         return final_count
+    def create_schedule (self):
+        self.initialize_schedule()
+        self.hard_constraint()
+        return self
 
