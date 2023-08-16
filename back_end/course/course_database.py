@@ -1,3 +1,5 @@
+import random
+
 from scheduling_website.back_end.course.course import Course
 from scheduling_website.back_end.teacher.teacher_database import retrieve_teacher_info
 
@@ -91,3 +93,17 @@ def retrieve_course_info(course_name,teacher_name):
 
 
     return course_data
+
+#Get the list of course_key
+def get_course_key_list():
+    connection,cursor = connect_database()
+    query = '''
+    SELECT id from course_information
+    '''
+    cursor.execute(query)
+    course_key_list = [row[0] for row in cursor.fetchall()]
+    close_connection(cursor,connection)
+    return course_key_list
+def random_course_key_list(course_key_list):
+    random.shuffle(course_key_list)
+    return course_key_list
