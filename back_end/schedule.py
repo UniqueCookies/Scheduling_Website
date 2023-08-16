@@ -27,7 +27,30 @@ class Schedule:
     #calculate violation of hard constraints
     def hard_constraint(self):
         count = 0
-        def repeating_class():
+        # checking if the same class is being taught more than once for each section
+        def repeating_class(count):
+            for section in range(self.num_of_sections):
+                for period in range(self.num_of_period):
+                    key1 =self.matrix[section][period]  #get keys1
+                    for compare_key in range(period+1,self.num_of_period):
+                        key2 = self.matrix[section][compare_key]
+                        if check_hcs_repeating_course(key1, key2):  #same course name means the section gets the same class twice
+                            count = count+1
 
-            count =0
+            return count
+        count = repeating_class(count)
+
+        # checking if the teacher is assigned to teach more than one class in the same period
+        def repeating_teacher(count):
+            for period in range(self.num_of_period):
+                for section in range(self.num_of_sections):
+                    count =0
+            return count
+
+
+        count = repeating_teacher(count)
+
+
+        self.hcs = count
         return count
+

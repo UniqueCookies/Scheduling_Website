@@ -123,3 +123,17 @@ def check_hcs_repeating_course(key1,key2):
 
     #compare
     return (name1==name2)
+
+def retrieve_teacher_name(id):
+    connection, cursor = connect_database()
+    query = '''
+     select teacher_name from course_information where id =?
+     '''
+    try:
+        cursor.execute(query, (id,))
+        teacher_name = cursor.fetchone()
+        return teacher_name[0] if teacher_name else None
+    except sqlite3.Error as e:
+        print(f"An error occured: {e}")
+    finally:
+        close_connection(cursor, connection)
