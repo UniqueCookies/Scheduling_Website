@@ -27,4 +27,6 @@ class Schedule:
     #calculate violation of hard constraints
     def hard_constraint(self):
         count = 0
+        def repeating_class():
+            count =0
         return count
