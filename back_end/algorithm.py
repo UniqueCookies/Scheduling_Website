@@ -2,6 +2,7 @@ from scheduling_website.back_end.schedule import *
 import random
 
 
+#create the size of population input by the user
 def create_population(num_of_population, num_of_section, num_of_period, grade_level):
     # initailize the schedule
     course_key = get_course_key_list()

@@ -1,15 +1,28 @@
 from scheduling_website.back_end.course.course_database import *
 from scheduling_website.back_end.teacher.teacher_database import *
 import itertools
+from tabulate import tabulate
 class Schedule:
     def __init__(self, num_of_sections, num_of_period,grade_level_list,course_key):
         self.course_key = course_key            #course key will be used to access course_info database
         self.matrix = self.initialize_schedule(num_of_period,num_of_sections)
         self.hcs = self.hard_constraint(num_of_period,num_of_sections)  # hard constraints
+    #Use the key to get teacher and course name
+    def transform_element(self,key):
+        teacher_name = retrieve_teacher_name(key)
+        course_name = get_course_name(key)
+        return (course_name,teacher_name)
     def __str__(self):
+        print(f"The number of hard constraints is: {self.hcs}\n")
+        table =[]
         for row in self.matrix:
-            print(row)
-        return f"The number of hard constraints is: {self.hcs}\n"
+            new_row =[self.transform_element(key) for key in row]
+            table.append(new_row)
+        num_of_periods = len(self.matrix[0])
+        head = [i for i in range(1,num_of_periods+1)]
+        format_table = tabulate(table,headers = head,tablefmt="fancy_grid")
+        return format_table
+
     #random generate schedule
     def initialize_schedule(self,num_of_period,num_of_sections):
         course_key = random_course_key_list(self.course_key)
@@ -22,7 +35,6 @@ class Schedule:
                 count=count+1
         self.course_key=course_key
         return matrix
-
     #calculate violation of hard constraints
     def hard_constraint(self,num_of_period,num_of_sections):
         count = 0
