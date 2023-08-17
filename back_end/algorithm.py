@@ -90,4 +90,16 @@ def hill_climber(schedule):
 def mutation(schedule):
     function_list = [single_mutation,hill_climber]
     random_function = random.choice(function_list)
-    return random_function(schedule)
+    result = random_function(schedule)
+    if result:
+        return f"{random_function} performed"
+    elif result is None:
+        return f"{random_function} not performed"
+    else:
+        return f"{random_function}: not fully performed"
+
+def compare_fitness(parent,offspring):
+    if parent.hcs >= offspring.hcs:
+        return offspring
+    else:
+        return parent

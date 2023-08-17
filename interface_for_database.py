@@ -6,11 +6,14 @@ from scheduling_website.back_end.algorithm import *
 #test algorithm.py
 population = create_population(10,2,6,[10,10])
 parent = tournament_selection(population,2)
+iteration = 0
+while parent.hcs>0 and iteration<100:
+    offspring = create_offspring(parent)
+    mutation(offspring)
+    parent = compare_fitness(parent,offspring)
+    iteration +=1
 print(parent)
-offspring = create_offspring(parent)
-next_gen=mutation(offspring)
-print(offspring)
-print(parent)
+print(iteration)
 
 '''''''''''
 result = hill_climber(parent)
