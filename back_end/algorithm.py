@@ -1,7 +1,6 @@
 from scheduling_website.back_end.schedule import *
 import random
 
-
 #create the size of population input by the user
 def create_population(num_of_population, num_of_section, num_of_period, grade_level):
     # initailize the schedule
@@ -13,17 +12,12 @@ def create_population(num_of_population, num_of_section, num_of_period, grade_le
         population.append(schedule)
     return population
 
-
-
-
-
 #tournament selection
 def tournament_selection(population,tournament_size):
     selected_parents = []
 
-    for _ in range(len(population)):
-        tournament = random.sample(population, tournament_size)
-        winner = max(tournament, key=lambda schedule: schedule.hcs)
-        selected_parents.append(winner)
+    tournament = random.sample(population, tournament_size)
+    winner = max(tournament, key=lambda schedule: schedule.hcs)
 
-    return selected_parents
+    return winner
+
