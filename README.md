@@ -1,7 +1,7 @@
 **Run the program**: 
 Go to "interface_for_database.py" file and run. 
 It currently works for one small schedule. Need more testing!
-The run time is extremetly long. Need to upgrade the algorithm to lower the run time
+The run time is extremely long. Need to upgrade the algorithm to lower the run time
 
 **What is this project for**: 
 K-12 principles can use this program to create their master's schedule for the school year. 
@@ -10,6 +10,9 @@ It is a work in progress.
 **progress**:
 able to generate initial schedule and check for its hard constraints
 algorithm is implemented
+Current work: 1. Build a website for users to input information and get a feasible schedule 
+              2. Make the website available to people
+
 Later improvement: 1. able to generate schedule for different grades 
            2. Allow certain class "multiple type" to have the classes at the same time
            3. be able to detect the existence of feasible solutions
