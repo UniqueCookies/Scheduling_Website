@@ -69,18 +69,21 @@ def hill_climber(schedule):
     iteration = 0
 
     #make sure 2nd swap is a clash is a clash
-    while (not schedule.check_if_clash(row2,col2) or col1 == col2) and iteration < maximum_iteration :
+    while (not schedule.check_if_clash(row2,col2) or (col1 == col2 and row1==row2)) and iteration < maximum_iteration :
         col2 = random.randint(0, num_cols - 1)
         if not col1==col2:
             row2 = random.randint(0, num_rows - 1)
         iteration += 1
 
+
     schedule.swap_element(row1, col1, row2, col2)
+
     print(iteration)
     key = schedule.get_info(row2, col2)
     print(schedule.transform_element(key))
     key = schedule.get_info(row1, col1)
     print(schedule.transform_element(key))
-    if not schedule.check_if_clash(row2,col2) or (col1==col2): #only one teacher has a schedule conflict
+
+    if not schedule.check_if_clash(row2,col2) and col1==col2: #only one teacher has a schedule conflict
         return False #still performed swap but it is a mutation with one clash
     return True
