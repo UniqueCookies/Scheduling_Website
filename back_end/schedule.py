@@ -84,3 +84,19 @@ class Schedule:
         final_count = class_repeat+teacher_repeat+violation
         self.hcs = final_count
         return final_count
+
+    #get matrix info
+    def get_info(self, row, col):
+        return self.matrix[row][col]
+
+    #single mutation step
+    def swap_element(self, row1, col1, row2, col2):
+        temp = self.matrix[row1][col1]
+        self.matrix[row1][col1]=self.matrix[row2][col2]
+        self.matrix[row2][col2]=temp
+
+        #update hcs
+        self.hcs=self.hard_constraint()
+
+
+

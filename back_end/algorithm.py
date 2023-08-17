@@ -39,10 +39,6 @@ def single_mutation(schedule):
         col2 = random.randint(0, num_cols - 1)
 
     #swap the element
-    temp = schedule.matrix[row1][col1]
-    schedule.matrix[row1][col1]=schedule.matrix[row2][col2]
-    schedule.matrix[row2][col2]=temp
-
-    schedule.hard_constraint()
+    schedule.swap_element(row1,col1,row2,col2)
 
     return schedule
