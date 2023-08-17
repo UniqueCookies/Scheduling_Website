@@ -42,3 +42,36 @@ def single_mutation(schedule):
     schedule.swap_element(row1,col1,row2,col2)
 
     return schedule
+
+#Hill climber for singler course
+def hill_climber(schedule):
+    num_rows = len(schedule.matrix)
+    num_cols = len(schedule.matrix[0])
+    iteration =0
+    maxiterations=100
+
+    # Generate random row and column indices for the two elements to swap
+    row1 = random.randint(0, num_rows - 1)
+    col1 = random.randint(0, num_cols - 1)
+    row2 = random.randint(0, num_rows - 1)
+    col2 = random.randint(0, num_cols - 1)
+
+    #make sure this one is a clash, after certain iteration, assume no clash
+    while not schedule.check_if_clash(row1,col1) and iteration<maxiterations:
+        row1 = random.randint(0, num_rows - 1)
+        col1 = random.randint(0, num_cols - 1)
+        iteration +=1
+    if not schedule.check_if_clash(row1,col1):
+        return None
+
+    iteration = 0
+    #make sure 2nd swap is a clash is a clash
+    while not schedule.check_if_clash(row2,col2) and iteration<maxiterations and row1 == row2 and col1 == col2:
+        row2 = random.randint(0, num_rows - 1)
+        col2 = random.randint(0, num_cols - 1)
+        iteration += 1
+    schedule.swap_element(row1, col1, row2, col2)
+
+    if not schedule.check_if_clash(row2,col2): #only one teacher has a schedule conflict
+        return False #still performed swap but it is a mutation with one clash
+    return True

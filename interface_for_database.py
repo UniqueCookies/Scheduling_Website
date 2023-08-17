@@ -8,11 +8,15 @@ population = create_population(10,2,6,[10,10])
 parent = tournament_selection(population,2)
 print(parent)
 #mutation=single_mutation(parent)
-if parent.check_if_clash(0,1):
-    print("Yes clash")
-else:
-    print("no clash")
 
+result = hill_climber(parent)
+if result is True:
+    print("hill climber is successful")
+elif result is False:
+    print("mutation with one clash is swapped")
+else:
+    print("no teacher conflict")
+print(parent)
 
 
 
