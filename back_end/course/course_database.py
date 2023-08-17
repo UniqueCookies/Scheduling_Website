@@ -85,13 +85,13 @@ def retrieve_course_info(course_name,teacher_name):
     close_connection(cursor, connection)
 
     if course_data:
-        id, course_name, teacher_name,course_type,grade_level = course_data
-        course_data = Course(course_name, teacher_name,course_type,grade_level)
+        id, course_name, teacher_name,course_type,grade_level = course_data[0]
+        course = Course(course_name, teacher_name,course_type,grade_level)
     else:
         return None
 
 
-    return course_data
+    return course
 #retrieve teacher's name according to the key
 def retrieve_teacher_name(key):
     #get teacher name from the course_database
