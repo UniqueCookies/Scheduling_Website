@@ -4,14 +4,15 @@ from scheduling_website.back_end.teacher.teacher_database import *
 from scheduling_website.back_end.algorithm import *
 
 #test algorithm.py
-#population = create_population(10,2,6,[10,10])
-#print(population)
+population = create_population(10,2,6,[10,10])
+for _ in range (len(population)):
+    print(population[_])
 #print(len(tournament_selection(population,5)))
 
 
 
 
-
+'''''''''
 #schedule test
 # Creating a Schedule object with a 3x4 matrix
 course_key= get_course_key_list()
@@ -20,6 +21,7 @@ print(schedule)
 #print(schedule)
 # Displaying the matrix within the Schedule object
 #print(schedule)
+'''''''''
 
 
 #class_database portion test
