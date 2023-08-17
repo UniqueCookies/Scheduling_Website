@@ -6,7 +6,7 @@ class Schedule:
     def __init__(self, num_of_sections, num_of_period,grade_level_list,course_key):
         self.course_key = course_key            #course key will be used to access course_info database
         self.matrix = self.initialize_schedule(num_of_period,num_of_sections)
-        self.hcs = self.hard_constraint(num_of_period,num_of_sections)  # hard constraints
+        self.hcs = self.hard_constraint()  # hard constraints
     #Use the key to get teacher and course name
     def transform_element(self,key):
         teacher_name = retrieve_teacher_name(key)
@@ -36,8 +36,10 @@ class Schedule:
         self.course_key=course_key
         return matrix
     #calculate violation of hard constraints
-    def hard_constraint(self,num_of_period,num_of_sections):
+    def hard_constraint(self):
         count = 0
+        num_of_period = len(self.matrix[0])
+        num_of_sections = len(self.matrix)
         # checking if the same class is being taught more than once for each section
         def repeating_class():
             count =0

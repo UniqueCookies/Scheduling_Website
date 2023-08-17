@@ -5,7 +5,10 @@ from scheduling_website.back_end.algorithm import *
 
 #test algorithm.py
 population = create_population(10,2,6,[10,10])
-print(tournament_selection(population,2))
+parent = tournament_selection(population,2)
+print(parent)
+mutation=single_mutation(parent)
+print(mutation)
 
 
 
