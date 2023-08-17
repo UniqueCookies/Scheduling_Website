@@ -24,7 +24,6 @@ def add_course(course_info):
             course_type INTEGER,
             grade_level INTEGER,
             FOREIGN KEY (teacher_name) REFERENCES teacher_information(teacher_name)
-            UNIQUE (course_name,teacher_name)
         )       
     '''
     cursor.execute(query)
