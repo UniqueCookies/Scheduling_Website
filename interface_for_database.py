@@ -7,6 +7,7 @@ from scheduling_website.back_end.algorithm import *
 population = create_population(10,2,6,[10,10])
 parent = tournament_selection(population,2)
 print(parent)
+offspring = create_offspring(parent)
 next_gen=mutation(offspring)
 print(offspring)
 print(parent)

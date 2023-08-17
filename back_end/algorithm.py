@@ -1,3 +1,5 @@
+import copy
+
 from scheduling_website.back_end.schedule import *
 import random
 
@@ -22,6 +24,11 @@ def tournament_selection(population,tournament_size):
     return winner
 
 #Mutation Operator Section
+
+#create offspring
+def create_offspring(parent):
+    offspring = copy.deepcopy(parent)
+    return offspring
 
 #randomly generate numbers for row and col
 def random_generate(num_rows,num_cols):
