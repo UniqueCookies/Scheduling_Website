@@ -7,8 +7,12 @@ from scheduling_website.back_end.algorithm import *
 population = create_population(10,2,6,[10,10])
 parent = tournament_selection(population,2)
 print(parent)
-mutation=single_mutation(parent)
-print(mutation)
+#mutation=single_mutation(parent)
+if parent.check_if_clash(0,1):
+    print("Yes clash")
+else:
+    print("no clash")
+
 
 
 

@@ -98,5 +98,15 @@ class Schedule:
         #update hcs
         self.hcs=self.hard_constraint()
 
+    #find two teachers that either has a time conflict
+    def check_if_clash(self,row1,col1):
+        value = self.matrix[row1][col1]
+        for row in self.matrix:
+            if row == row1:
+                continue
+            if row[col1] == value:
+                return True
+        return False
+
 
 
