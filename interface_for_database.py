@@ -10,7 +10,7 @@ print(parent)
 #mutation=single_mutation(parent)
 
 result = hill_climber(parent)
-if result is True:
+if result:
     print("hill climber is successful")
 elif result is False:
     print("mutation with one clash is swapped")
