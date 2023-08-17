@@ -101,10 +101,10 @@ class Schedule:
     #find two teachers that either has a time conflict
     def check_if_clash(self,row1,col1):
         value = self.matrix[row1][col1]
-        for row in self.matrix:
+        for row in range (len(self.matrix)):
             if row == row1:
                 continue
-            if row[col1] == value:
+            if check_hcs_repeating_teacher(self.matrix[row][col1], value):
                 return True
         return False
 
