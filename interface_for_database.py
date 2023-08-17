@@ -7,8 +7,11 @@ from scheduling_website.back_end.algorithm import *
 population = create_population(10,2,6,[10,10])
 parent = tournament_selection(population,2)
 print(parent)
-#mutation=single_mutation(parent)
+next_gen=mutation(offspring)
+print(offspring)
+print(parent)
 
+'''''''''''
 result = hill_climber(parent)
 if result:
     print("hill climber is successful")
@@ -17,6 +20,7 @@ elif result is False:
 else:
     print("no teacher conflict")
 print(parent)
+'''''''''''
 
 
 

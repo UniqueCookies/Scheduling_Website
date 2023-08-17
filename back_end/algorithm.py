@@ -44,8 +44,7 @@ def single_mutation(schedule):
     #swap the element
     schedule.swap_element(row1,col1,row2,col2)
 
-    return schedule
-
+    return True
 #Hill climber for singler course
 def hill_climber(schedule):
     num_rows = len(schedule.matrix)
@@ -70,18 +69,18 @@ def hill_climber(schedule):
         row2, col2 = random_generate(num_rows, num_cols)
         iteration += 1
 
+    #swap happens
     schedule.swap_element(row1, col1, row2, col2)
 
-    print(iteration)
-    key = schedule.get_info(row2, col2)
-    print(schedule.transform_element(key))
-    key = schedule.get_info(row1, col1)
-    print(schedule.transform_element(key))
-
-
+    #Error Analysis
     if schedule.check_if_clash(row2,col2) or col1==col2: #only one teacher has a schedule conflict
-        print(col1,col2,schedule.check_if_clash(row2,col2))
         return False #mutation with one clash and may not be meaningful swap
                     #when col1==col2, that does not solve the schedule conflict
 
     return True
+
+#Mutation step: randomly choose which function to perform
+def mutation(schedule):
+    function_list = [single_mutation,hill_climber]
+    random_function = random.choice(function_list)
+    return random_function(schedule)
