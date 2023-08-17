@@ -1,3 +1,7 @@
+Run the program: 
+Go to "interface_for_database.py" file and run. 
+It currently work for one small schedule. Need more testing!
+
 Program Glossory:
 course folder: contain course class, and function related to its database
 teacher folder: contain teacher class, and function related to its database
