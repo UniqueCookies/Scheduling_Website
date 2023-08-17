@@ -22,21 +22,24 @@ def tournament_selection(population,tournament_size):
     return winner
 
 #Mutation Operator Section
+
+#randomly generate numbers for row and col
+def random_generate(num_rows,num_cols):
+    row = random.randint(0, num_rows - 1)
+    col = random.randint(0, num_cols - 1)
+    return row,col
+
 #Single Mutation
 def single_mutation(schedule):
     num_rows = len(schedule.matrix)
     num_cols = len(schedule.matrix[0])
 
     # Generate random row and column indices for the two elements to swap
-    row1 = random.randint(0, num_rows - 1)
-    col1 = random.randint(0, num_cols - 1)
-    row2 = random.randint(0, num_rows - 1)
-    col2 = random.randint(0, num_cols - 1)
-
+    row1,col1 = random_generate(num_rows,num_cols)
+    row2, col2 = random_generate(num_rows, num_cols)
     # Ensure the two sets of indices are distinct
     while row1 == row2 and col1 == col2:
-        row2 = random.randint(0, num_rows - 1)
-        col2 = random.randint(0, num_cols - 1)
+        row2, col2 = random_generate(num_rows, num_cols)
 
     #swap the element
     schedule.swap_element(row1,col1,row2,col2)
@@ -51,30 +54,21 @@ def hill_climber(schedule):
     maximum_iteration=100
 
     # Generate random row and column indices for the two elements to swap
-    row1 = random.randint(0, num_rows - 1)
-    col1 = random.randint(0, num_cols - 1)
-    row2 = random.randint(0, num_rows - 1)
-    col2 = random.randint(0, num_cols - 1)
+    row1,col1 = random_generate(num_rows,num_cols)
+    row2, col2 = random_generate(num_rows, num_cols)
 
     #make sure this one is a clash, after certain iteration, assume no clash
     while not schedule.check_if_clash(row1,col1) and iteration<maximum_iteration:
-        row1 = random.randint(0, num_rows - 1)
-        col1 = random.randint(0, num_cols - 1)
+        row1, col1 = random_generate(num_rows, num_cols)
         iteration +=1
     if not schedule.check_if_clash(row1,col1):
         return None
 
-
-
     iteration = 0
-
     #make sure 2nd swap is a clash is a clash
-    while (not schedule.check_if_clash(row2,col2) or (col1 == col2 and row1==row2)) and iteration < maximum_iteration :
-        col2 = random.randint(0, num_cols - 1)
-        if not col1==col2:
-            row2 = random.randint(0, num_rows - 1)
+    while (not schedule.check_if_clash(row2,col2) or col1==col2) and iteration < maximum_iteration :
+        row2, col2 = random_generate(num_rows, num_cols)
         iteration += 1
-
 
     schedule.swap_element(row1, col1, row2, col2)
 
@@ -84,6 +78,10 @@ def hill_climber(schedule):
     key = schedule.get_info(row1, col1)
     print(schedule.transform_element(key))
 
-    if not schedule.check_if_clash(row2,col2) and col1==col2: #only one teacher has a schedule conflict
-        return False #still performed swap but it is a mutation with one clash
+
+    if schedule.check_if_clash(row2,col2) or col1==col2: #only one teacher has a schedule conflict
+        print(col1,col2,schedule.check_if_clash(row2,col2))
+        return False #mutation with one clash and may not be meaningful swap
+                    #when col1==col2, that does not solve the schedule conflict
+
     return True

@@ -13,7 +13,7 @@ result = hill_climber(parent)
 if result:
     print("hill climber is successful")
 elif result is False:
-    print("mutation with one clash is swapped")
+    print("Swap happened, mutation may not be meaningful")
 else:
     print("no teacher conflict")
 print(parent)
