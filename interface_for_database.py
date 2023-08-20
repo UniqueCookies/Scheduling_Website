@@ -17,7 +17,7 @@ while parent.hcs > 0 and overall_iteration < 3:
         iteration += 1
     overall_iteration += 1
 print(parent)
-print(iteration)
+print(f"The number of iteration is: {iteration}")
 
 """""" """''
 result = hill_climber(parent)

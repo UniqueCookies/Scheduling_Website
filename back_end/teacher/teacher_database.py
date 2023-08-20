@@ -67,6 +67,7 @@ def display_all_teacher_information():
     close_connection(cursor, connection)
 
 
+# delete a certain teacher by matching the unique name
 def delete_teacher_info(name):
     connection, cursor = connect_database()
     query = f"DELETE FROM teacher_information WHERE teacher_name = ?"
@@ -106,7 +107,7 @@ def retrieve_teacher_info(name):
         return None
 
 
-# check if the teacher is availble during the assigned period:
+# check if the teacher is available during the assigned period:
 def check_availability(name, period):
     # get availability information from the database
     teacher = retrieve_teacher_info(name)

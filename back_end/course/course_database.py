@@ -59,6 +59,7 @@ def add_course(course_info):
     close_connection(cursor, connection)
 
 
+# display all the course information from the database
 def display_all_course_information():
     connection, cursor = connect_database()
     # Retrieve data from the table
@@ -74,6 +75,7 @@ def display_all_course_information():
     close_connection(cursor, connection)
 
 
+# delete a certain course(s) taught by a particular teacher
 def delete_course_info(course_name, teacher_name):
     connection, cursor = connect_database()
     query = """
@@ -92,6 +94,8 @@ def delete_course_info(course_name, teacher_name):
     close_connection(cursor, connection)
 
 
+# Get the course object information by matching the course and teacher name.
+# If the teacher teaches more than one of the same class, will only return one of the course
 def retrieve_course_info(course_name, teacher_name):
     connection, cursor = connect_database()
     query = """

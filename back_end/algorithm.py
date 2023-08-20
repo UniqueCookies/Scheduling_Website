@@ -6,14 +6,14 @@ import random
 
 # create the size of population input by the user
 def create_population(num_of_population, num_of_section, num_of_period, grade_level):
-    # initailize the schedule
+    # initialize the schedule
     course_key = get_course_key_list()
     # create a number of schedules
     population = []
     for _ in range(num_of_population):
         schedule = Schedule(
             num_of_section, num_of_period, grade_level, course_key
-        )  # 2 sections, 6 periods  --> input by the user
+        )  # Assuming 2 sections, 6 periods right now  --> input by the user
         population.append(schedule)
     return population
 
@@ -81,7 +81,7 @@ def hill_climber(schedule):
         return None
 
     iteration = 0
-    # make sure 2nd swap is a clash is a clash
+    # make sure 2nd swap is a clash, assume no clash after certain iteration
     while (
         not schedule.check_if_clash(row2, col2) or col1 == col2
     ) and iteration < maximum_iteration:

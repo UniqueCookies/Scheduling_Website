@@ -99,11 +99,11 @@ class Schedule:
         self.hcs = final_count
         return final_count
 
-    # get matrix info
+    # get the course_key info from the matrix
     def get_info(self, row, col):
         return self.matrix[row][col]
 
-    # single mutation step
+    # single mutation step by swapping random two cells
     def swap_element(self, row1, col1, row2, col2):
         temp = self.matrix[row1][col1]
         self.matrix[row1][col1] = self.matrix[row2][col2]
@@ -112,7 +112,7 @@ class Schedule:
         # update hcs
         self.hcs = self.hard_constraint()
 
-    # find two teachers that either has a time conflict
+    # check if this teacher is teaching more than one class in the same period
     def check_if_clash(self, row1, col1):
         value = self.matrix[row1][col1]
         for row in range(len(self.matrix)):
