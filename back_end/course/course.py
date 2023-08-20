@@ -1,7 +1,8 @@
 from scheduling_website.back_end.teacher.teacher import Teacher
 
 
-# class_type will be an add-on feature for later where two coures need to be combined together.
+# class_type will be an add-on feature for later
+# where two coures need to be taught at the same time.
 # grade level indicate which section this course can be taught in
 class Course:
     def __init__(self, course_name, teacher_name, class_type, grade_level):
@@ -11,5 +12,8 @@ class Course:
         self.grade_level = grade_level
 
     def __str__(self):
-        combined_text = "Combined" if self.class_type == 1 else "Single"
-        return f"Course: {self.course_name}\nTeacher: {self.teacher_name}\nType: {combined_text}\nGrade Level: {self.grade_level}"
+        combined_text = "Combined" \
+            if self.class_type == 1 else "Single"
+        return f"Course: {self.course_name}\n" \
+               f"Teacher: {self.teacher_name}\n" \
+               f"Type: {combined_text}\nGrade Level: {self.grade_level}"

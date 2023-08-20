@@ -10,7 +10,7 @@ overall_iteration = 0
 while parent.hcs > 0 and overall_iteration < 3:
     parent = tournament_selection(population, 5)
     iteration = 0
-    while parent.hcs > 0 and iteration < 1000:
+    while parent.hcs > 0 and iteration < 100:
         offspring = create_offspring(parent)
         mutation(offspring)
         parent = compare_fitness(parent, offspring)

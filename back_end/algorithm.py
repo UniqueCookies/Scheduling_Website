@@ -5,7 +5,8 @@ import random
 
 
 # create the size of population input by the user
-def create_population(num_of_population, num_of_section, num_of_period, grade_level):
+def create_population(num_of_population, num_of_section,
+                      num_of_period, grade_level):
     # initialize the schedule
     course_key = get_course_key_list()
     # create a number of schedules
@@ -73,8 +74,10 @@ def hill_climber(schedule):
     row1, col1 = random_generate(num_rows, num_cols)
     row2, col2 = random_generate(num_rows, num_cols)
 
-    # make sure this one is a clash, after certain iteration, assume no clash
-    while not schedule.check_if_clash(row1, col1) and iteration < maximum_iteration:
+    # make sure this one is a clash,
+    # after certain iteration, assume no clash
+    while not schedule.check_if_clash(row1, col1) \
+            and iteration < maximum_iteration:
         row1, col1 = random_generate(num_rows, num_cols)
         iteration += 1
     if not schedule.check_if_clash(row1, col1):

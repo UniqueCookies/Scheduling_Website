@@ -1,7 +1,9 @@
 import random
 
 from scheduling_website.back_end.course.course import Course
-from scheduling_website.back_end.teacher.teacher_database import retrieve_teacher_info
+from scheduling_website.back_end.teacher.teacher_database import (
+    retrieve_teacher_info
+)
 
 import sqlite3
 
@@ -29,8 +31,9 @@ def add_course(course_info):
             teacher_name TEXT, --this is the foreign key
             course_type INTEGER,
             grade_level INTEGER,
-            FOREIGN KEY (teacher_name) REFERENCES teacher_information(teacher_name)
-        )       
+            FOREIGN KEY (teacher_name)
+                REFERENCES teacher_information(teacher_name)
+        )
     """
     cursor.execute(query)
 
@@ -79,7 +82,7 @@ def display_all_course_information():
 def delete_course_info(course_name, teacher_name):
     connection, cursor = connect_database()
     query = """
-         DELETE FROM course_information 
+         DELETE FROM course_information
          WHERE course_name = ? AND teacher_name =?
     """
 
@@ -95,11 +98,13 @@ def delete_course_info(course_name, teacher_name):
 
 
 # Get the course object information by matching the course and teacher name.
-# If the teacher teaches more than one of the same class, will only return one of the course
+# If the teacher teaches more than one of the same class
+# will only return one of the course
 def retrieve_course_info(course_name, teacher_name):
     connection, cursor = connect_database()
     query = """
-        select * from course_information where course_name =? AND teacher_name =?
+        select * from course_information
+            where course_name =? AND teacher_name =?
         """
     try:
         cursor.execute(query, (course_name, teacher_name))
@@ -109,7 +114,8 @@ def retrieve_course_info(course_name, teacher_name):
     close_connection(cursor, connection)
 
     if course_data:
-        id, course_name, teacher_name, course_type, grade_level = course_data[0]
+        id, course_name, teacher_name, \
+            course_type, grade_level = course_data[0]
         course = Course(course_name, teacher_name, course_type, grade_level)
     else:
         return None
@@ -121,7 +127,8 @@ def retrieve_course_info(course_name, teacher_name):
 def retrieve_teacher_name(key):
     # get teacher name from the course_database
     connection, cursor = connect_database()
-    cursor.execute("select teacher_name from course_information where id=?", (key,))
+    cursor.execute("select teacher_name from course_information "
+                   "where id=?", (key,))
     teacher_name = cursor.fetchone()
     if teacher_name:
         teacher_name = teacher_name[0]
@@ -149,7 +156,8 @@ def random_course_key_list(course_key_list):
 # get course name from the key
 def get_course_name(key):
     connection, cursor = connect_database()
-    cursor.execute("select course_name from course_information where id=?", (key,))
+    cursor.execute("select course_name from course_information "
+                   "where id=?", (key,))
     name = cursor.fetchone()
     name = name[0]
     close_connection(cursor, connection)
@@ -169,10 +177,12 @@ def check_hcs_repeating_course(key1, key2):
 def check_hcs_repeating_teacher(key1, key2):
     # get teacher_name from the table
     connection, cursor = connect_database()
-    cursor.execute("select teacher_name from course_information where id=?", (key1,))
+    cursor.execute("select teacher_name from course_information "
+                   "where id=?", (key1,))
     name1 = cursor.fetchone()
     name1 = name1[0]
-    cursor.execute("select teacher_name from course_information where id=?", (key2,))
+    cursor.execute("select teacher_name from course_information "
+                   "where id=?", (key2,))
     name2 = cursor.fetchone()
     name2 = name2[0]
     close_connection(cursor, connection)

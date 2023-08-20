@@ -5,4 +5,6 @@ class Teacher:
         self.preference = preference
 
     def __str__(self):
-        return f"Teacher: {self.name}\nAvailability: {self.availability}\nPreference: {self.preference}"
+        return f"Teacher: {self.name}\n" \
+               f"Availability: {self.availability}\n" \
+               f"Preference: {self.preference}"

@@ -26,7 +26,7 @@ def add_teacher(teacher_info):
             teacher_name TEXT PRIMARY KEY NOT NULL,
             availability TEXT,
             preference TEXT
-        )       
+        )
     """
     cursor.execute(query)
 
@@ -43,7 +43,8 @@ def add_teacher(teacher_info):
     """
 
     try:
-        cursor.execute(query, (teacher_info.name, availability_json, preference_json))
+        cursor.execute(query,
+                       (teacher_info.name, availability_json, preference_json))
         connection.commit()
     except sqlite3.Error as e:
         print(f"An error occured: {e}")

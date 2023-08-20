@@ -5,9 +5,10 @@ from tabulate import tabulate
 
 
 class Schedule:
-    def __init__(self, num_of_sections, num_of_period, grade_level_list, course_key):
+    def __init__(self, num_of_sections, num_of_period,
+                 grade_level_list, course_key):
         self.course_key = (
-            course_key  # course key will be used to access course_info database
+            course_key  # to access course_info database
         )
         self.matrix = self.initialize_schedule(num_of_period, num_of_sections)
         self.hcs = self.hard_constraint()  # hard constraints
@@ -32,7 +33,8 @@ class Schedule:
     # random generate schedule
     def initialize_schedule(self, num_of_period, num_of_sections):
         course_key = random_course_key_list(self.course_key)
-        matrix = [[None for _ in range(num_of_period)] for _ in range(num_of_sections)]
+        matrix = [[None for _ in range(num_of_period)]
+                  for _ in range(num_of_sections)]
 
         count = 0
         for period in range(num_of_period):
@@ -48,24 +50,28 @@ class Schedule:
         num_of_period = len(self.matrix[0])
         num_of_sections = len(self.matrix)
 
-        # checking if the same class is being taught more than once for each section
+        # checking if the same class is being taught
+        # more than once for each section
         def repeating_class():
             count = 0
             for section in range(num_of_sections):
-                for period1, period2 in itertools.combinations(range(num_of_period), 2):
+                for period1, period2 \
+                        in itertools.combinations(range(num_of_period), 2):
                     key1 = self.matrix[section][period1]
                     key2 = self.matrix[section][period2]
+                    # each section cannot get the same class twice
                     if check_hcs_repeating_course(
                         key1, key2
-                    ):  # same course name means the section gets the same class twice
+                    ):
                         count = count + 1
 
             return count
 
         class_repeat = repeating_class()
         # print(f"Repeating class hcs is:{class_repeat}")
+        # checking if the teacher is assigned to teach
+        # more than one class in the same period
 
-        # checking if the teacher is assigned to teach more than one class in the same period
         def repeating_teacher():
             count = 0
             for period in range(num_of_period):
@@ -87,7 +93,8 @@ class Schedule:
             for section in range(num_of_sections):
                 for period in range(num_of_period):
                     key = self.matrix[section][period]
-                    teacher_name = retrieve_teacher_name(key)  # get teacher name
+                    # get teacher name
+                    teacher_name = retrieve_teacher_name(key)
                     if check_availability(teacher_name, period) is not True:
                         count += 1
             return count
