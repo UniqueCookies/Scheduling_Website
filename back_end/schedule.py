@@ -1,5 +1,5 @@
-from scheduling_website.back_end.course.course_database import *
-from scheduling_website.back_end.teacher.teacher_database import *
+from back_end.course.course_database import *
+from back_end.teacher.teacher_database import *
 import itertools
 from tabulate import tabulate
 

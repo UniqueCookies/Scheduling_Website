@@ -1,6 +1,7 @@
 import copy
 
-from scheduling_website.back_end.schedule import *
+from back_end.course.course_database import get_course_key_list
+from back_end.schedule import *
 import random
 
 

@@ -1,6 +1,3 @@
-from scheduling_website.back_end.teacher.teacher import Teacher
-
-
 # class_type will be an add-on feature for later
 # where two coures need to be taught at the same time.
 # grade level indicate which section this course can be taught in

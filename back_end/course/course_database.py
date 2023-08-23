@@ -1,11 +1,7 @@
 import random
-
-from scheduling_website.back_end.course.course import Course
-from scheduling_website.back_end.teacher.teacher_database import (
-    retrieve_teacher_info
-)
-
 import sqlite3
+
+from back_end.course.course import Course
 
 
 def connect_database():

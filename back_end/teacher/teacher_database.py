@@ -1,6 +1,7 @@
-import sqlite3
 import json
-from scheduling_website.back_end.teacher.teacher import Teacher
+import sqlite3
+
+from back_end.teacher.teacher import Teacher
 
 
 # teacher database connections

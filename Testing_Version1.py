@@ -1,7 +1,7 @@
-from scheduling_website.back_end.schedule import *
-from scheduling_website.back_end.course.course_database import *
-from scheduling_website.back_end.teacher.teacher_database import *
-from scheduling_website.back_end.algorithm import *
+from back_end.schedule import *
+from back_end.course.course_database import *
+from back_end.teacher.teacher_database import *
+from back_end.algorithm import *
 
 # test algorithm.py
 population = create_population(100, 3, 6, [10, 10, 10])
