@@ -7,7 +7,7 @@ from back_end.teacher.teacher_database import *
 from back_end.algorithm import *
 
 # test algorithm.py
-population = create_population(100, 3, 6, [10, 10, 10])
+population = create_population(100, 2, 6, 10)
 parent = tournament_selection(population, 5)
 overall_iteration = 0
 while parent.hcs > 0 and overall_iteration < 3:

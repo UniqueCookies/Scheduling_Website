@@ -19,6 +19,17 @@ def transform_element(key):
     return (course_name, teacher_name)
 
 
+def display_as_table(matrix):
+    table = []
+    for row in matrix:
+        new_row = [transform_element(key) for key in row]
+        table.append(new_row)
+    num_of_periods = len(matrix[0])
+    head = [i for i in range(1, num_of_periods + 1)]
+    format_table = tabulate(table, headers=head, tablefmt="fancy_grid")
+    return format_table
+
+
 class Section:
     def __init__(self, num_of_sections, num_of_period,
                  grade_level, course_key):
@@ -31,14 +42,8 @@ class Section:
         self.grade_level = grade_level
 
     def __str__(self):
-        print(f"The number of hard constraints is: {self.hcs}\n")
-        table = []
-        for row in self.matrix:
-            new_row = [transform_element(key) for key in row]
-            table.append(new_row)
-        num_of_periods = len(self.matrix[0])
-        head = [i for i in range(1, num_of_periods + 1)]
-        format_table = tabulate(table, headers=head, tablefmt="fancy_grid")
+        print(f"Grade: {self.grade_level}. The number of hard constraints is: {self.hcs}\n")
+        format_table = display_as_table(self.matrix)
         return format_table
 
     # random generate section
@@ -163,7 +168,7 @@ class Section:
         key = self.matrix[row1][col1]
         return if_multiple(key)
 
-    def check_if_swap_double(self,col1,col2):
+    def check_if_swap_double(self, col1, col2):
         availability_list = self.multiple[1]
         if col1 in availability_list and col2 in availability_list:
             return True
