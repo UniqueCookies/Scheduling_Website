@@ -16,3 +16,6 @@ course_key = get_course_key_list(10)
 section = Section(2, 6, 10, course_key)
 print(section)
 '''''''''''''''''
+
+population = create_population(100, 2, 6, 10)
+parent = tournament_selection(population, 5)

@@ -19,9 +19,6 @@ def initialize_schedule(num_of_sections, num_of_period,
             merge_matrix.append(row)
     return merge_matrix
 
-
-
-
 class Schedule:
     def __init__(self, num_of_sections, num_of_period, grade_level_list):
         self.matrix = initialize_schedule(num_of_sections, num_of_period,
