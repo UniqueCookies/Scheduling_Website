@@ -19,13 +19,77 @@ def transform_element(key):
     return (course_name, teacher_name)
 
 
-def display_as_table(matrix,grade_list):
+# calculate violation of hard constraints
+def hard_constraint(matrix,num_of_sections,num_of_period):
+    count = 0
+    num_of_period = len(matrix[0])
+    num_of_sections = len(matrix)
+
+    # checking if the same class is being taught
+    # more than once for each section
+    def repeating_class():
+        count = 0
+        for section in range(num_of_sections):
+            for period1, period2 \
+                    in itertools.combinations(range(num_of_period), 2):
+                key1 = matrix[section][period1]
+                key2 = matrix[section][period2]
+                # each section cannot get the same class twice
+                if check_hcs_repeating_course(
+                        key1, key2
+                ):
+                    count = count + 1
+
+        return count
+
+    class_repeat = repeating_class()
+
+    # print(f"Repeating class hcs is:{class_repeat}")
+    # checking if the teacher is assigned to teach
+    # more than one class in the same period
+
+    def repeating_teacher():
+        count = 0
+        for period in range(num_of_period):
+            for section1, section2 in itertools.combinations(
+                    range(num_of_sections), 2
+            ):
+                key1 = matrix[section1][period]
+                key2 = matrix[section2][period]
+                if check_hcs_repeating_teacher(key1, key2):
+                    count += 1
+        return count
+
+    teacher_repeat = repeating_teacher()
+
+    # print(f"Repeating teacher hcs is:{teacher_repeat}")
+
+    # check if it violates the teacher's availability section
+    def violate_availability():
+        count = 0
+        for section in range(num_of_sections):
+            for period in range(num_of_period):
+                key = matrix[section][period]
+                # get teacher name
+                teacher_name = retrieve_teacher_name(key)
+                if check_availability(teacher_name, period) is not True:
+                    count += 1
+        return count
+
+    violation = violate_availability()
+    # print(f"Teacher availability violation hcs is:{violation}")
+
+    final_count = class_repeat + teacher_repeat + violation
+    return final_count
+
+
+def display_as_table(matrix, grade_list):
     table = []
     for i, row in enumerate(matrix):
-        new_row = [grade_list[i]]+[transform_element(key) for key in row]
+        new_row = [grade_list[i]] + [transform_element(key) for key in row]
         table.append(new_row)
     num_of_periods = len(matrix[0])
-    head = ["Grades"]+[str(i) for i in range(1, num_of_periods + 1)]
+    head = ["Grades"] + [str(i) for i in range(1, num_of_periods + 1)]
     format_table = tabulate(table, headers=head, tablefmt="fancy_grid")
     return format_table
 
@@ -36,16 +100,18 @@ class Section:
         self.course_key = (
             course_key  # to access course_info database
         )
-        self.multiple = find_multiple(grade_level)
-        self.matrix = self.initialize_section(num_of_period, num_of_sections)
-        self.hcs = self.hard_constraint()  # hard constraints
         self.grade_level = grade_level
         self.num_of_sections = num_of_sections
+        self.num_of_period = num_of_period
+        self.multiple = find_multiple(grade_level)
+        self.matrix = self.initialize_section(num_of_period, num_of_sections)
+        self.hcs = self.update_hcs()  # hard constraints
+
 
     def __str__(self):
         print(f"The number of hard constraints is: {self.hcs}\n")
-        grade_list = [f"grade {self.grade_level}" for i in range (self.num_of_sections)]
-        format_table = display_as_table(self.matrix,grade_list)
+        grade_list = [f"grade {self.grade_level}" for i in range(self.num_of_sections)]
+        format_table = display_as_table(self.matrix, grade_list)
         return format_table
 
     # random generate section
@@ -65,6 +131,11 @@ class Section:
         self.course_key = course_key
         return matrix
 
+    def update_hcs(self):
+        hcs = hard_constraint(self.matrix, self.num_of_sections, self.num_of_period)
+        self.hcs = hcs
+        return hcs
+
     def fill_in_multiple(self, matrix, course_key):
         item = random.choice(self.multiple[1])
         course_list = self.multiple[0]
@@ -72,70 +143,6 @@ class Section:
             matrix[i][item] = course_list[i]
         course_key = [item for item in course_key if item not in course_list]
         return course_key
-
-    # calculate violation of hard constraints
-    def hard_constraint(self):
-        count = 0
-        num_of_period = len(self.matrix[0])
-        num_of_sections = len(self.matrix)
-
-        # checking if the same class is being taught
-        # more than once for each section
-        def repeating_class():
-            count = 0
-            for section in range(num_of_sections):
-                for period1, period2 \
-                        in itertools.combinations(range(num_of_period), 2):
-                    key1 = self.matrix[section][period1]
-                    key2 = self.matrix[section][period2]
-                    # each section cannot get the same class twice
-                    if check_hcs_repeating_course(
-                            key1, key2
-                    ):
-                        count = count + 1
-
-            return count
-
-        class_repeat = repeating_class()
-
-        # print(f"Repeating class hcs is:{class_repeat}")
-        # checking if the teacher is assigned to teach
-        # more than one class in the same period
-
-        def repeating_teacher():
-            count = 0
-            for period in range(num_of_period):
-                for section1, section2 in itertools.combinations(
-                        range(num_of_sections), 2
-                ):
-                    key1 = self.matrix[section1][period]
-                    key2 = self.matrix[section2][period]
-                    if check_hcs_repeating_teacher(key1, key2):
-                        count += 1
-            return count
-
-        teacher_repeat = repeating_teacher()
-
-        # print(f"Repeating teacher hcs is:{teacher_repeat}")
-
-        # check if it violates the teacher's availability section
-        def violate_availability():
-            count = 0
-            for section in range(num_of_sections):
-                for period in range(num_of_period):
-                    key = self.matrix[section][period]
-                    # get teacher name
-                    teacher_name = retrieve_teacher_name(key)
-                    if check_availability(teacher_name, period) is not True:
-                        count += 1
-            return count
-
-        violation = violate_availability()
-        # print(f"Teacher availability violation hcs is:{violation}")
-
-        final_count = class_repeat + teacher_repeat + violation
-        self.hcs = final_count
-        return final_count
 
     # get the course_key info from the matrix
     def get_info(self, row, col):
@@ -148,12 +155,12 @@ class Section:
         self.matrix[row2][col2] = temp
 
         # update hcs
-        self.hcs = self.hard_constraint()
+        self.hcs = self.update_hcs()
 
     def swap_column(self, col1, col2):
         for row in self.matrix:
             row[col1], row[col2] = row[col2], row[col1]
-        self.hcs = self.hard_constraint()
+        self.hcs = self.update_hcs()
 
     # check if this teacher is teaching more than one class in the same period
     def check_if_clash(self, row1, col1):
