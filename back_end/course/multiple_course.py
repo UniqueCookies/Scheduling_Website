@@ -4,13 +4,14 @@ import sqlite3
 
 
 # get all the multiple course and its teacher's name
-def get_multiple_course_id():
+def get_multiple_course_id(grade):
     connection, cursor = connect_database()
     query = '''
-    select id,teacher_name from course_information where course_type =1
+    select id,teacher_name from course_information where course_type =? 
+                                                and grade_level = ?
     '''
 
-    cursor.execute(query)
+    cursor.execute(query,(1,grade))
     rows = cursor.fetchall()
     multiple_course_list = [row[0] for row in rows]
     teacher_name_list = [row[1] for row in rows]

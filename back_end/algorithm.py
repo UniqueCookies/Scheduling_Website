@@ -1,7 +1,7 @@
 import copy
 
 from back_end.course.course_database import get_course_key_list
-from back_end.schedule import *
+from back_end.section import *
 import random
 
 
@@ -9,14 +9,14 @@ import random
 def create_population(num_of_population, num_of_section,
                       num_of_period, grade_level):
     # initialize the schedule
-    course_key = get_course_key_list()
+    course_key = get_course_key_list(grade_level)
     # create a number of schedules
     population = []
     for _ in range(num_of_population):
-        schedule = Schedule(
+        section = Section(
             num_of_section, num_of_period, grade_level, course_key
         )  # Assuming 2 sections, 6 periods right now  --> input by the user
-        population.append(schedule)
+        population.append(section)
     return population
 
 

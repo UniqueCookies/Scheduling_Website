@@ -1,4 +1,4 @@
-from back_end.schedule import *
+from back_end.section import *
 from back_end.course.course_database import *
 from back_end.teacher.teacher_database import *
 from back_end.algorithm import *

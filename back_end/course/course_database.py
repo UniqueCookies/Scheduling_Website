@@ -133,12 +133,12 @@ def retrieve_teacher_name(key):
 
 
 # Get the list of course_key
-def get_course_key_list():
+def get_course_key_list(grade):
     connection, cursor = connect_database()
     query = """
-    SELECT id from course_information
+    SELECT id from course_information where grade_level = ?
     """
-    cursor.execute(query)
+    cursor.execute(query,(grade,))
     course_key_list = [row[0] for row in cursor.fetchall()]
     close_connection(cursor, connection)
     return course_key_list
@@ -188,3 +188,13 @@ def check_hcs_repeating_teacher(key1, key2):
         return name1 == name2
     else:
         return None
+
+
+def get_unique_section():
+    connection, cursor = connect_database()
+    cursor.execute("select DISTINCT grade_level from course_information")
+    grade_list = cursor.fetchall()
+    close_connection(cursor, connection)
+
+    grade_list =[row[0] for row in grade_list]
+    return grade_list
