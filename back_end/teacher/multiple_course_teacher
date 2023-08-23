@@ -1,0 +1,7 @@
+import json
+import sqlite3
+
+from back_end.teacher.teacher import Teacher
+from back_end.teacher.teacher_database import *
+
+def check

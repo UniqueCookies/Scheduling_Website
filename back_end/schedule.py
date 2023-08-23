@@ -32,6 +32,10 @@ class Schedule:
 
     # random generate schedule
     def initialize_schedule(self, num_of_period, num_of_sections):
+
+
+
+
         course_key = random_course_key_list(self.course_key)
         matrix = [[None for _ in range(num_of_period)]
                   for _ in range(num_of_sections)]
