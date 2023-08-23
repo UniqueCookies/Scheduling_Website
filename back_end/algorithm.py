@@ -58,8 +58,13 @@ def single_mutation(schedule):
     while row1 == row2 and col1 == col2:
         row2, col2 = random_generate(num_rows, num_cols)
 
-    # swap the element
-    schedule.swap_element(row1, col1, row2, col2)
+    if schedule.check_if_double(row1, col1) or schedule.check_if_double(row2, col2):
+        # If one of them is a double course
+        # Swap the entire columns
+        if schedule.check_if_swap_double(col1, col2):
+            schedule.swap_column(col1, col2)
+    else:
+        schedule.swap_element(row1, col1, row2, col2)
 
     return True
 
@@ -74,12 +79,17 @@ def hill_climber(schedule):
     # Generate random row and column indices for the two elements to swap
     row1, col1 = random_generate(num_rows, num_cols)
     row2, col2 = random_generate(num_rows, num_cols)
+    while schedule.check_if_double(row1, col1):
+        row1, col1 = random_generate(num_rows, num_cols)
+    while schedule.check_if_double(row2, col2):
+        row2, col2 = random_generate(num_rows, num_cols)
 
     # make sure this one is a clash,
     # after certain iteration, assume no clash
     while not schedule.check_if_clash(row1, col1) \
             and iteration < maximum_iteration:
-        row1, col1 = random_generate(num_rows, num_cols)
+        while schedule.check_if_double(row1, col1):
+            row1, col1 = random_generate(num_rows, num_cols)
         iteration += 1
     if not schedule.check_if_clash(row1, col1):
         return None
@@ -87,8 +97,8 @@ def hill_climber(schedule):
     iteration = 0
     # make sure 2nd swap is a clash, assume no clash after certain iteration
     while (
-        not schedule.check_if_clash(row2, col2) or col1 == col2
-    ) and iteration < maximum_iteration:
+            not schedule.check_if_clash(row2, col2) or col1 == col2
+    ) and iteration < maximum_iteration and schedule.check_if_double(row2, col2):
         row2, col2 = random_generate(num_rows, num_cols)
         iteration += 1
 
@@ -97,7 +107,7 @@ def hill_climber(schedule):
 
     # Error Analysis
     if (
-        schedule.check_if_clash(row2, col2) or col1 == col2
+            schedule.check_if_clash(row2, col2) or col1 == col2
     ):  # only one teacher has a schedule conflict
         return False  # mutation with one clash and may not be meaningful swap
         # when col1==col2, that does not solve the schedule conflict
