@@ -19,13 +19,13 @@ def transform_element(key):
     return (course_name, teacher_name)
 
 
-def display_as_table(matrix):
+def display_as_table(matrix,grade_list):
     table = []
-    for row in matrix:
-        new_row = [transform_element(key) for key in row]
+    for i, row in enumerate(matrix):
+        new_row = [grade_list[i]]+[transform_element(key) for key in row]
         table.append(new_row)
     num_of_periods = len(matrix[0])
-    head = [i for i in range(1, num_of_periods + 1)]
+    head = ["Grades"]+[str(i) for i in range(1, num_of_periods + 1)]
     format_table = tabulate(table, headers=head, tablefmt="fancy_grid")
     return format_table
 
@@ -40,10 +40,12 @@ class Section:
         self.matrix = self.initialize_section(num_of_period, num_of_sections)
         self.hcs = self.hard_constraint()  # hard constraints
         self.grade_level = grade_level
+        self.num_of_sections = num_of_sections
 
     def __str__(self):
-        print(f"Grade: {self.grade_level}. The number of hard constraints is: {self.hcs}\n")
-        format_table = display_as_table(self.matrix)
+        print(f"The number of hard constraints is: {self.hcs}\n")
+        grade_list = [f"grade {self.grade_level}" for i in range (self.num_of_sections)]
+        format_table = display_as_table(self.matrix,grade_list)
         return format_table
 
     # random generate section
