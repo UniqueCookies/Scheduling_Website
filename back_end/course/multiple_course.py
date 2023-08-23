@@ -36,9 +36,9 @@ def if_multiple(key):
     cursor.execute(
         "select course_type from course_information where id = ?", (key,)
     )
-    type = cursor.fetchone()
-    type = type[0]
-    if type == 1:
+    check = cursor.fetchone()
+    check = check[0]
+    if check == 1:
         return True
     else:
         return False
