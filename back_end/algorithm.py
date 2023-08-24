@@ -7,7 +7,7 @@ import random
 
 
 # create the size of population input by the user
-def create_population(num_of_population,num_of_period,grade_level_list):
+def create_population(num_of_population, num_of_period, grade_level_list):
     # create a number of schedules
     population = []
     for _ in range(num_of_population):
@@ -18,7 +18,6 @@ def create_population(num_of_population,num_of_period,grade_level_list):
 
 # tournament selection
 def tournament_selection(population, tournament_size):
-
     tournament = random.sample(population, tournament_size)
     winner = max(tournament, key=lambda schedule: schedule.hcs)
 
@@ -34,21 +33,20 @@ def create_offspring(parent):
     return offspring
 
 
-# randomly generate numbers for row and col
-def random_generate_row(num_rows):
+def random_generate(num_rows, num_cols):
     row = random.randint(0, num_rows - 1)
-    return row
-def random_generate_col(num_cols):
     col = random.randint(0, num_cols - 1)
-    return col
-def random_generate(num_rows,num_cols):
-    row =random_generate_row(num_rows)
-    col =random_generate_col(num_cols)
-    return row,col
+    return row, col
 
 
 # Single Mutation
-def single_mutation(section):
+def single_mutation(schedule):
+    grade = len(schedule.grade_level_list)
+    choose_grade = random.randint(0, grade - 1)
+    single_mutation_section(schedule.matrix[choose_grade][0])
+
+
+def single_mutation_section(section):
     num_rows = len(section.matrix)
     num_cols = len(section.matrix[0])
 
@@ -71,7 +69,14 @@ def single_mutation(section):
 
 
 # Hill climber for singler course
-def hill_climber(section):
+def hill_climber(schedule):
+    grade = len(schedule.grade_level_list)
+    choose_grade = random.randint(0, grade - 1)
+    section = schedule.matrix[choose_grade][0]
+
+    hill_climber_section(section)
+
+def hill_climber_section(section):
     num_rows = len(section.matrix)
     num_cols = len(section.matrix[0])
     iteration = 0
@@ -117,10 +122,10 @@ def hill_climber(section):
 
 
 # Mutation step: randomly choose which function to perform
-def mutation(section):
+def mutation(schedule):
     function_list = [single_mutation, hill_climber]
     random_function = random.choice(function_list)
-    result = random_function(section)
+    result = random_function(schedule)
     if result:
         return f"{random_function} performed"
     elif result is None:
