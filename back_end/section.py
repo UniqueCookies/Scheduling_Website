@@ -16,69 +16,64 @@ def find_multiple(grade_level):
 def transform_element(key):
     teacher_name = retrieve_teacher_name(key)
     course_name = get_course_name(key)
-    return (course_name, teacher_name)
+    return course_name, teacher_name
+
+
+# checking if the same class is being taught
+# more than once for each section
+def repeating_class(matrix, num_of_sections, num_of_period):
+    count = 0
+    for section in range(num_of_sections):
+        for period1, period2 \
+                in itertools.combinations(range(num_of_period), 2):
+            key1 = matrix[section][period1]
+            key2 = matrix[section][period2]
+            # each section cannot get the same class twice
+            if check_hcs_repeating_course(
+                    key1, key2
+            ):
+                count = count + 1
+    return count
+
+
+# print(f"Repeating class hcs is:{class_repeat}")
+# checking if the teacher is assigned to teach
+# more than one class in the same period
+
+def repeating_teacher(matrix, num_of_sections, num_of_period):
+    count = 0
+    for period in range(num_of_period):
+        for section1, section2 in itertools.combinations(
+                range(num_of_sections), 2
+        ):
+            key1 = matrix[section1][period]
+            key2 = matrix[section2][period]
+            if check_hcs_repeating_teacher(key1, key2):
+                count += 1
+    return count
+
+
+# check if it violates the teacher's availability section
+def violate_availability(matrix, num_of_sections, num_of_period):
+    count = 0
+    for section in range(num_of_sections):
+        for period in range(num_of_period):
+            key = matrix[section][period]
+            # get teacher name
+            teacher_name = retrieve_teacher_name(key)
+            if check_availability(teacher_name, period) is not True:
+                count += 1
+    return count
 
 
 # calculate violation of hard constraints
-def hard_constraint(matrix,num_of_sections,num_of_period):
-    count = 0
+def hard_constraint(matrix):
     num_of_period = len(matrix[0])
     num_of_sections = len(matrix)
 
-    # checking if the same class is being taught
-    # more than once for each section
-    def repeating_class():
-        count = 0
-        for section in range(num_of_sections):
-            for period1, period2 \
-                    in itertools.combinations(range(num_of_period), 2):
-                key1 = matrix[section][period1]
-                key2 = matrix[section][period2]
-                # each section cannot get the same class twice
-                if check_hcs_repeating_course(
-                        key1, key2
-                ):
-                    count = count + 1
-
-        return count
-
-    class_repeat = repeating_class()
-
-    # print(f"Repeating class hcs is:{class_repeat}")
-    # checking if the teacher is assigned to teach
-    # more than one class in the same period
-
-    def repeating_teacher():
-        count = 0
-        for period in range(num_of_period):
-            for section1, section2 in itertools.combinations(
-                    range(num_of_sections), 2
-            ):
-                key1 = matrix[section1][period]
-                key2 = matrix[section2][period]
-                if check_hcs_repeating_teacher(key1, key2):
-                    count += 1
-        return count
-
-    teacher_repeat = repeating_teacher()
-
-    # print(f"Repeating teacher hcs is:{teacher_repeat}")
-
-    # check if it violates the teacher's availability section
-    def violate_availability():
-        count = 0
-        for section in range(num_of_sections):
-            for period in range(num_of_period):
-                key = matrix[section][period]
-                # get teacher name
-                teacher_name = retrieve_teacher_name(key)
-                if check_availability(teacher_name, period) is not True:
-                    count += 1
-        return count
-
-    violation = violate_availability()
-    # print(f"Teacher availability violation hcs is:{violation}")
-
+    class_repeat = repeating_class(matrix, num_of_sections, num_of_period)
+    teacher_repeat = repeating_teacher(matrix, num_of_sections, num_of_period)
+    violation = violate_availability(matrix, num_of_sections, num_of_period)
     final_count = class_repeat + teacher_repeat + violation
     return final_count
 
@@ -107,7 +102,6 @@ class Section:
         self.matrix = self.initialize_section(num_of_period, num_of_sections)
         self.hcs = self.update_hcs()  # hard constraints
 
-
     def __str__(self):
         print(f"The number of hard constraints is: {self.hcs}\n")
         grade_list = [f"grade {self.grade_level}" for i in range(self.num_of_sections)]
@@ -132,7 +126,7 @@ class Section:
         return matrix
 
     def update_hcs(self):
-        hcs = hard_constraint(self.matrix, self.num_of_sections, self.num_of_period)
+        hcs = hard_constraint(self.matrix)
         self.hcs = hcs
         return hcs
 
