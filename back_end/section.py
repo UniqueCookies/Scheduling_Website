@@ -1,6 +1,6 @@
 from back_end.course.course_database import *
 from back_end.course.special_course import if_multiple, get_course_id_special
-from back_end.teacher.special_course_teacher import multiple_course_info
+from back_end.teacher.special_course_teacher import multiple_course_info, get_availability_double
 from back_end.teacher.teacher_database import *
 import itertools
 from tabulate import tabulate
@@ -14,7 +14,7 @@ def find_multiple(grade_level):
 
 def find_double(grade_level):
     double_course, teacher_name = get_course_id_special(grade_level, 2)
-    availability = multiple_course_info(teacher_name)
+    double_course, availability = get_availability_double(teacher_name, double_course)
     return [double_course, availability]
 
 
@@ -111,6 +111,7 @@ class Section:
 
     def __str__(self):
         print(f"The number of hard constraints is: {self.hcs}\n")
+        print(f"The number of double is: {self.double}\n")
         grade_list = [f"grade {self.grade_level}" for i in range(self.num_of_sections)]
         format_table = display_as_table(self.matrix, grade_list)
         return format_table
@@ -146,10 +147,13 @@ class Section:
         return course_key
 
     def fill_in_double(self, matrix, course_key):
-        item = random.choice(self.double[1])
         course_list = self.double[0]
+        availability = self.double[1]
         for i in range(len(matrix)):
-            matrix[i][item] = course_list[i]
+
+            item = (item//2)
+
+
         course_key = [item for item in course_key if item not in course_list]
         return course_key
 

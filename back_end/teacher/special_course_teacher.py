@@ -26,7 +26,7 @@ def multiple_course_info(teacher_name_list):
     return possible_period
 
 
-def get_availability_double(teacher_name_list):
+def get_availability_double(teacher_name_list, double_course):
     # Get availability
     teacher_name_tuple = tuple(teacher_name_list)
     placeholders = ','.join(['?' for _ in teacher_name_list])
@@ -50,9 +50,9 @@ def get_availability_double(teacher_name_list):
             return False
 
     # Sort the List
-    available, teacher_name_list= sort_list(available, teacher_name_list)
+    double_course, available= sort_list(available, double_course)
 
-    return available, teacher_name_list
+    return double_course, available
 
 
 def check_availability_double(availability):
@@ -68,13 +68,13 @@ def check_availability_double(availability):
     return available
 
 
-def sort_list(availability, teacher_name_list):
+def sort_list(availability, double_course):
     # Combine the two lists into pairs using zip
-    combined = list(zip(availability, teacher_name_list))
+    combined = list(zip(availability, double_course))
 
     # Sort the combined list based on the length of the elements in the first list
     sorted_combined = sorted(combined, key=lambda x: len(x[0]))
 
     # Separate the sorted pairs back into two lists
-    availability, teacher_name_list = zip(*sorted_combined)
-    return availability, teacher_name_list
+    availability, double_course = zip(*sorted_combined)
+    return double_course, availability

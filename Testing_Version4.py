@@ -9,9 +9,4 @@ from back_end.algorithm import *
 
 course_key = get_course_key_list(10)
 section = Section(2, 6, 10, course_key)
-
-teacher_name_list = ['Sally','Sue','Tommy']
-
-
-availability,teacher_name_list= get_availability_double(teacher_name_list)
-print(availability,teacher_name_list)
+#print(section)
