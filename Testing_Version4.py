@@ -10,7 +10,8 @@ from back_end.algorithm import *
 course_key = get_course_key_list(10)
 section = Section(2, 6, 10, course_key)
 
-print(get_availability_double(["Sally","Sue"]))
+teacher_name_list = ['Sally','Sue','Tommy']
 
-availability=[1,0,1,1,0,0]
-print(check_availability_double(availability))
+
+availability,teacher_name_list= get_availability_double(teacher_name_list)
+print(availability,teacher_name_list)

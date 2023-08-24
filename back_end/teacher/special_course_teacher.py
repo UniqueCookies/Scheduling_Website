@@ -39,25 +39,42 @@ def get_availability_double(teacher_name_list):
     close_connection(cursor, connection)
 
     # convert from sting to list
-    temp = []
+    available = []
     for i in range(len(availability)):
         to_add = json.loads(availability[i][0])
         to_add = check_availability_double(to_add)
+        # Get the available period for each of the double course teacher
         if to_add is not False:
-            temp.append(to_add)
+            available.append(to_add)
         else:
             return False
-    return temp
+
+    # Sort the List
+    available, teacher_name_list= sort_list(available, teacher_name_list)
+
+    return available, teacher_name_list
 
 
 def check_availability_double(availability):
     num_of_period = len(availability)
     available = []
-    if not num_of_period%2 ==0:
+    if not num_of_period % 2 == 0:
         return False
-    num_of_block = num_of_period//2
-    for i in range (0,num_of_period-1, 2):
-        if not availability[i]==0 and not availability[i+1]==0:
+    num_of_block = num_of_period // 2
+    for i in range(0, num_of_period - 1, 2):
+        if not availability[i] == 0 and not availability[i + 1] == 0:
             available.append(i)
-            available.append(i+1)
+            available.append(i + 1)
     return available
+
+
+def sort_list(availability, teacher_name_list):
+    # Combine the two lists into pairs using zip
+    combined = list(zip(availability, teacher_name_list))
+
+    # Sort the combined list based on the length of the elements in the first list
+    sorted_combined = sorted(combined, key=lambda x: len(x[0]))
+
+    # Separate the sorted pairs back into two lists
+    availability, teacher_name_list = zip(*sorted_combined)
+    return availability, teacher_name_list
