@@ -8,9 +8,17 @@ from back_end.teacher.teacher_database import *
 from back_end.algorithm import *
 
 grade_level_list = [(10, 2), (11, 2)]
+population = create_population(10,6,grade_level_list)
+parent = tournament_selection(population, 5)
+print(parent)
+
+
+
+'''''''''''''''''''''''
+grade_level_list = [(10, 2), (11, 2)]
 schedule = Schedule(6, grade_level_list)
 print(schedule)
-count = repeating_teacher_schedule(schedule.matrix, 2, grade_level_list)
+'''''''''''''''''''''''
 
 '''''''''''''''''''''''
 course_key = get_course_key_list(10)

@@ -7,16 +7,11 @@ import random
 
 
 # create the size of population input by the user
-def create_population(num_of_population, num_of_section,
-                      num_of_period):
-    # initialize the schedule
-    grade_level_list = get_unique_section()
+def create_population(num_of_population,num_of_period,grade_level_list):
     # create a number of schedules
     population = []
     for _ in range(num_of_population):
-        schedule = Schedule(
-            num_of_section, num_of_period, grade_level_list
-        )  # Assuming 2 sections, 6 periods right now  --> input by the user
+        schedule = Schedule(num_of_period, grade_level_list)
         population.append(schedule)
     return population
 
