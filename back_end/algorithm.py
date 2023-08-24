@@ -129,8 +129,7 @@ def hill_climber_section(section):
 # Mutation step: randomly choose which function to perform
 def mutation(schedule):
     function_list = [single_mutation, hill_climber]
-    #random_function = random.choice(function_list)
-    random_function = single_mutation
+    random_function = random.choice(function_list)
     result = random_function(schedule)
     if result:
         return f"{random_function} performed"

@@ -8,22 +8,22 @@ from back_end.teacher.teacher_database import *
 from back_end.algorithm import *
 
 grade_level_list = [(10, 2), (11, 2)]
-population = create_population(5,6,grade_level_list)
+population = create_population(100,6,grade_level_list)
 parent = population[0]
 
 overall_iteration = 0
-while parent.hcs > 0 and overall_iteration < 1:
-    parent = tournament_selection(population, 2)
+while parent.hcs > 0 and overall_iteration < 3:
+    parent = tournament_selection(population, 20)
     print(parent)
     iteration = 0
-    while parent.hcs > 0 and iteration < 10:
+    while parent.hcs > 0 and iteration < 2000:
         offspring = create_offspring(parent)
-        print(mutation(offspring))
+        mutation(offspring)
         parent = compare_fitness(parent, offspring)
         iteration += 1
     overall_iteration += 1
+    print(offspring)
 
-print(parent)
 print(f"The number of iteration is: {iteration}")
 
 
