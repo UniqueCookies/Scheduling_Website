@@ -4,20 +4,20 @@ import sqlite3
 
 
 # get all the multiple course and its teacher's name
-def get_multiple_course_id(grade):
+def get_course_id_special(grade,course_type):
     connection, cursor = connect_database()
     query = '''
     select id,teacher_name from course_information where course_type =? 
                                                 and grade_level = ?
     '''
 
-    cursor.execute(query,(1,grade))
+    cursor.execute(query,(course_type,grade))
     rows = cursor.fetchall()
-    multiple_course_list = [row[0] for row in rows]
+    special_course_list = [row[0] for row in rows]
     teacher_name_list = [row[1] for row in rows]
     close_connection(cursor, connection)
 
-    return multiple_course_list, teacher_name_list
+    return special_course_list, teacher_name_list
 
 
 # check if the schedule is infeasible

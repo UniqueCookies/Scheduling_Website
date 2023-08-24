@@ -59,10 +59,10 @@ def single_mutation_section(section):
     while row1 == row2 and col1 == col2:
         row2, col2 = random_generate(num_rows, num_cols)
 
-    if section.check_if_double(row1, col1) or section.check_if_double(row2, col2):
+    if section.check_if_multiple(row1, col1) or section.check_if_multiple(row2, col2):
         # If one of them is a double course
         # Swap the entire columns
-        if section.check_if_swap_double(col1, col2):
+        if section.check_if_swap_multiple(col1, col2):
             section.swap_column(col1, col2)
         else:
             return None
@@ -90,16 +90,16 @@ def hill_climber_section(section):
     # Generate random row and column indices for the two elements to swap
     row1, col1 = random_generate(num_rows, num_cols)
     row2, col2 = random_generate(num_rows, num_cols)
-    while section.check_if_double(row1, col1):
+    while section.check_if_multiple(row1, col1):
         row1, col1 = random_generate(num_rows, num_cols)
-    while section.check_if_double(row2, col2):
+    while section.check_if_multiple(row2, col2):
         row2, col2 = random_generate(num_rows, num_cols)
 
     # make sure this one is a clash,
     # after certain iteration, assume no clash
     while not section.check_if_clash(row1, col1) \
             and iteration < maximum_iteration:
-        while section.check_if_double(row1, col1):
+        while section.check_if_multiple(row1, col1):
             row1, col1 = random_generate(num_rows, num_cols)
         iteration += 1
     if not section.check_if_clash(row1, col1):
@@ -109,7 +109,7 @@ def hill_climber_section(section):
     # make sure 2nd swap is a clash, assume no clash after certain iteration
     while (
             not section.check_if_clash(row2, col2) or col1 == col2
-    ) and iteration < maximum_iteration and section.check_if_double(row2, col2):
+    ) and iteration < maximum_iteration and section.check_if_multiple(row2, col2):
         row2, col2 = random_generate(num_rows, num_cols)
         iteration += 1
 

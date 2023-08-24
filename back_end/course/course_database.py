@@ -136,10 +136,16 @@ def retrieve_teacher_name(key):
 def get_course_key_list(grade):
     connection, cursor = connect_database()
     query = """
-    SELECT id from course_information where grade_level = ?
+    SELECT id from course_information where grade_level = ? and course_type <>?
     """
-    cursor.execute(query,(grade,))
+    cursor.execute(query,(grade,2,))
     course_key_list = [row[0] for row in cursor.fetchall()]
+    query = """
+    SELECT id from course_information where grade_level = ? and course_type =?
+    """
+    cursor.execute(query,(grade,2,))
+    double_course_key_list=[row[0] for row in cursor.fetchall()]
+    course_key_list = course_key_list + double_course_key_list+ double_course_key_list
     close_connection(cursor, connection)
     return course_key_list
 

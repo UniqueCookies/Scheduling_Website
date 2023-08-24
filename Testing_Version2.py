@@ -1,5 +1,5 @@
-from back_end.course.multiple_course import *
-from back_end.teacher.multiple_course_teacher import *
+from back_end.course.special_course import *
+from back_end.teacher.special_course_teacher import *
 from back_end.course.course import Course
 from back_end.section import *
 from back_end.course.course_database import *

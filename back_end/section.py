@@ -1,15 +1,21 @@
 from back_end.course.course_database import *
-from back_end.course.multiple_course import get_multiple_course_id, if_multiple
-from back_end.teacher.multiple_course_teacher import multiple_course_info
+from back_end.course.special_course import if_multiple, get_course_id_special
+from back_end.teacher.special_course_teacher import multiple_course_info
 from back_end.teacher.teacher_database import *
 import itertools
 from tabulate import tabulate
 
 
 def find_multiple(grade_level):
-    multiple_course, teacher_name = get_multiple_course_id(grade_level)
+    multiple_course, teacher_name = get_course_id_special(grade_level, 1)
     availability = multiple_course_info(teacher_name)
     return [multiple_course, availability]
+
+
+def find_double(grade_level):
+    double_course, teacher_name = get_course_id_special(grade_level, 2)
+    availability = multiple_course_info(teacher_name)
+    return [double_course, availability]
 
 
 # Use the key to get teacher and course name
@@ -99,6 +105,7 @@ class Section:
         self.num_of_sections = num_of_sections
         self.num_of_period = num_of_period
         self.multiple = find_multiple(grade_level)
+        self.double = find_double(grade_level)
         self.matrix = self.initialize_section(num_of_period, num_of_sections)
         self.hcs = self.update_hcs()  # hard constraints
 
@@ -138,6 +145,14 @@ class Section:
         course_key = [item for item in course_key if item not in course_list]
         return course_key
 
+    def fill_in_double(self, matrix, course_key):
+        item = random.choice(self.double[1])
+        course_list = self.double[0]
+        for i in range(len(matrix)):
+            matrix[i][item] = course_list[i]
+        course_key = [item for item in course_key if item not in course_list]
+        return course_key
+
     # get the course_key info from the matrix
     def get_info(self, row, col):
         return self.matrix[row][col]
@@ -167,11 +182,11 @@ class Section:
         return False
 
     # return True if it is multiple
-    def check_if_double(self, row1, col1):
+    def check_if_multiple(self, row1, col1):
         key = self.matrix[row1][col1]
         return if_multiple(key)
 
-    def check_if_swap_double(self, col1, col2):
+    def check_if_swap_multiple(self, col1, col2):
         availability_list = self.multiple[1]
         if col1 in availability_list and col2 in availability_list:
             return True
