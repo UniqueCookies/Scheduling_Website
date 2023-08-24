@@ -43,7 +43,9 @@ def random_generate(num_rows, num_cols):
 def single_mutation(schedule):
     grade = len(schedule.grade_level_list)
     choose_grade = random.randint(0, grade - 1)
-    single_mutation_section(schedule.matrix[choose_grade][0])
+    result = single_mutation_section(schedule.matrix[choose_grade][0])
+    schedule.update_hcs()
+    return result
 
 
 def single_mutation_section(section):
@@ -62,6 +64,8 @@ def single_mutation_section(section):
         # Swap the entire columns
         if section.check_if_swap_double(col1, col2):
             section.swap_column(col1, col2)
+        else:
+            return None
     else:
         section.swap_element(row1, col1, row2, col2)
 
@@ -73,8 +77,9 @@ def hill_climber(schedule):
     grade = len(schedule.grade_level_list)
     choose_grade = random.randint(0, grade - 1)
     section = schedule.matrix[choose_grade][0]
-
-    hill_climber_section(section)
+    result = hill_climber_section(section)
+    schedule.update_hcs()
+    return result
 
 def hill_climber_section(section):
     num_rows = len(section.matrix)
@@ -124,7 +129,8 @@ def hill_climber_section(section):
 # Mutation step: randomly choose which function to perform
 def mutation(schedule):
     function_list = [single_mutation, hill_climber]
-    random_function = random.choice(function_list)
+    #random_function = random.choice(function_list)
+    random_function = single_mutation
     result = random_function(schedule)
     if result:
         return f"{random_function} performed"
