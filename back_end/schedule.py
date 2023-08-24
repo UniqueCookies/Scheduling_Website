@@ -47,5 +47,8 @@ class Schedule:
 
     def update_hcs(self):
         hcs = repeating_teacher_schedule(self.matrix,self.num_of_period,self.grade_level_list)
+        num_of_grades=len(self.matrix)
+        for i in range (num_of_grades):
+            hcs += self.matrix[i][0].hcs
         self.hcs = hcs
         return hcs
