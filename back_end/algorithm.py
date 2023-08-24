@@ -1,28 +1,28 @@
 import copy
 
 from back_end.course.course_database import get_course_key_list
+from back_end.schedule import Schedule
 from back_end.section import *
 import random
 
 
 # create the size of population input by the user
 def create_population(num_of_population, num_of_section,
-                      num_of_period, grade_level):
+                      num_of_period):
     # initialize the schedule
-    course_key = get_course_key_list(grade_level)
+    grade_level_list = get_unique_section()
     # create a number of schedules
     population = []
     for _ in range(num_of_population):
-        section = Section(
-            num_of_section, num_of_period, grade_level, course_key
+        schedule = Schedule(
+            num_of_section, num_of_period, grade_level_list
         )  # Assuming 2 sections, 6 periods right now  --> input by the user
-        population.append(section)
+        population.append(schedule)
     return population
 
 
 # tournament selection
 def tournament_selection(population, tournament_size):
-    selected_parents = []
 
     tournament = random.sample(population, tournament_size)
     winner = max(tournament, key=lambda schedule: schedule.hcs)
@@ -40,10 +40,16 @@ def create_offspring(parent):
 
 
 # randomly generate numbers for row and col
-def random_generate(num_rows, num_cols):
+def random_generate_row(num_rows):
     row = random.randint(0, num_rows - 1)
+    return row
+def random_generate_col(num_cols):
     col = random.randint(0, num_cols - 1)
-    return row, col
+    return col
+def random_generate(num_rows,num_cols):
+    row =random_generate_row(num_rows)
+    col =random_generate_col(num_cols)
+    return row,col
 
 
 # Single Mutation
