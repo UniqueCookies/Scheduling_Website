@@ -14,8 +14,10 @@ def find_multiple(grade_level):
 
 def find_double(grade_level):
     double_course, teacher_name = get_course_id_special(grade_level, 2)
-    double_course, availability = get_availability_double(teacher_name, double_course)
-    return [double_course, availability]
+    if not len(double_course)==0 and not len(teacher_name) ==0:
+        double_course, availability = get_availability_double(teacher_name, double_course)
+        return [double_course, availability]
+    return False
 
 
 # Use the key to get teacher and course name
@@ -74,6 +76,8 @@ def violate_availability(matrix, num_of_sections, num_of_period):
 
 # calculate violation of hard constraints
 def hard_constraint(matrix):
+    if matrix is None:
+        return 0
     num_of_period = len(matrix[0])
     num_of_sections = len(matrix)
 
@@ -85,6 +89,8 @@ def hard_constraint(matrix):
 
 
 def display_as_table(matrix, grade_list):
+    if matrix is None:
+        return f"This section is empty"
     table = []
     for i, row in enumerate(matrix):
         new_row = [grade_list[i]] + [transform_element(key) for key in row]
@@ -111,7 +117,7 @@ class Section:
 
     def __str__(self):
         print(f"The number of hard constraints is: {self.hcs}\n")
-        print(f"The number of double is: {self.double}\n")
+        #print(f"The number of double is: {self.double}\n")
         grade_list = [f"grade {self.grade_level}" for i in range(self.num_of_sections)]
         format_table = display_as_table(self.matrix, grade_list)
         return format_table
@@ -122,6 +128,8 @@ class Section:
         matrix = [[None for _ in range(num_of_period)]
                   for _ in range(num_of_sections)]
         course_key = self.fill_in_multiple(matrix, course_key)
+        if not course_key:
+            return None
         count = 0
 
         for period in range(num_of_period):
@@ -139,6 +147,8 @@ class Section:
         return hcs
 
     def fill_in_multiple(self, matrix, course_key):
+        if self.multiple[1] is None:
+            return False
         item = random.choice(self.multiple[1])
         course_list = self.multiple[0]
         for i in range(len(matrix)):
@@ -149,12 +159,9 @@ class Section:
     def fill_in_double(self, matrix, course_key):
         course_list = self.double[0]
         availability = self.double[1]
-        for i in range(len(matrix)):
-
-            item = (item//2)
 
 
-        course_key = [item for item in course_key if item not in course_list]
+        # course_key = [item for item in course_key if item not in course_list]
         return course_key
 
     # get the course_key info from the matrix

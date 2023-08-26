@@ -16,6 +16,9 @@ def multiple_course_info(teacher_name_list):
         availability_list.append(availability)
     close_connection(cursor, connection)
 
+    if not availability_list:
+        return None
+
     sublist_length = len(availability_list[0])
     possible_period = []
     for i in range(sublist_length):

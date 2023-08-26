@@ -8,5 +8,5 @@ from back_end.teacher.teacher_database import *
 from back_end.algorithm import *
 
 course_key = get_course_key_list(10)
-section = Section(2, 6, 10, course_key)
-#print(section)
+section = Section(2, 6, 11, course_key)
+print(section)

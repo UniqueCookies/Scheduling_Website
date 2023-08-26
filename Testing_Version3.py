@@ -12,7 +12,7 @@ population = create_population(100,6,grade_level_list)
 parent = population[0]
 
 overall_iteration = 0
-while parent.hcs > 0 and overall_iteration < 3:
+while parent.hcs > 0 and overall_iteration < 1:
     parent = tournament_selection(population, 20)
     print(parent)
     iteration = 0

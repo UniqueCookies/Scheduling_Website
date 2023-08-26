@@ -16,7 +16,8 @@ def get_course_id_special(grade,course_type):
     special_course_list = [row[0] for row in rows]
     teacher_name_list = [row[1] for row in rows]
     close_connection(cursor, connection)
-
+    if special_course_list is None or teacher_name_list is None:
+        return None, None
     return special_course_list, teacher_name_list
 
 
