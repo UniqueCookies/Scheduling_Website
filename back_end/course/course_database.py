@@ -145,7 +145,7 @@ def get_course_key_list(grade):
     """
     cursor.execute(query,(grade,2,))
     double_course_key_list=[row[0] for row in cursor.fetchall()]
-    course_key_list = course_key_list + double_course_key_list+ double_course_key_list
+    course_key_list = course_key_list + double_course_key_list
     close_connection(cursor, connection)
     return course_key_list
 

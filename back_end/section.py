@@ -6,6 +6,13 @@ import itertools
 from tabulate import tabulate
 
 
+def check_occupied(matrix, row, col):
+    if matrix[row][col] is None:
+        return True
+    else:
+        return False
+
+
 def find_multiple(grade_level):
     multiple_course, teacher_name = get_course_id_special(grade_level, 1)
     availability = multiple_course_info(teacher_name)
@@ -14,9 +21,11 @@ def find_multiple(grade_level):
 
 def find_double(grade_level):
     double_course, teacher_name = get_course_id_special(grade_level, 2)
-    if not len(double_course)==0 and not len(teacher_name) ==0:
+    if not len(double_course) == 0 and not len(teacher_name) == 0:
         double_course, availability = get_availability_double(teacher_name, double_course)
-        return [double_course, availability]
+        double_course_matrix = [t for t in double_course]
+        availability_matrix = [list(t) for t in availability]
+        return [double_course_matrix, availability_matrix]
     return False
 
 
@@ -117,7 +126,7 @@ class Section:
 
     def __str__(self):
         print(f"The number of hard constraints is: {self.hcs}\n")
-        #print(f"The number of double is: {self.double}\n")
+        # print(f"The number of double is: {self.double}\n")
         grade_list = [f"grade {self.grade_level}" for i in range(self.num_of_sections)]
         format_table = display_as_table(self.matrix, grade_list)
         return format_table
@@ -128,10 +137,12 @@ class Section:
         matrix = [[None for _ in range(num_of_period)]
                   for _ in range(num_of_sections)]
         course_key = self.fill_in_multiple(matrix, course_key)
+        print(course_key)
+        course_key = self.fill_in_double(matrix, course_key)
+        print(course_key)
         if not course_key:
             return None
         count = 0
-
         for period in range(num_of_period):
             for section in range(num_of_sections):
                 if matrix[section][period] is not None:
@@ -156,10 +167,35 @@ class Section:
         course_key = [item for item in course_key if item not in course_list]
         return course_key
 
+    # Each course needs to be added in twice and back to back starting with even number period index
+    # Should be added to different section
     def fill_in_double(self, matrix, course_key):
+        if not self.double:
+            return None
         course_list = self.double[0]
         availability = self.double[1]
 
+        for i in range(len(availability)):
+            available_period = availability[i]
+            j = 0
+            while j < len(available_period):
+                period = available_period[j]
+                section = 0
+                while section < self.num_of_sections:
+                    if all(check_occupied(matrix, section, p) for p in (period, period + 1)):
+                        # fill in the cell
+                        course_to_fill = course_list[i]
+                        matrix[section][period] = course_to_fill
+                        matrix[section][period + 1] = course_to_fill
+                        course_key.remove(course_to_fill)
+                        section = self.num_of_sections
+                        j = len(available_period) + 1
+                    else:
+                        section += 1
+                j = j + 2
+        print(course_key)
+        if any(course in course_key for course in course_list):
+            return False
 
         # course_key = [item for item in course_key if item not in course_list]
         return course_key
