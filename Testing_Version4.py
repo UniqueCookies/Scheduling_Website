@@ -10,6 +10,7 @@ from back_end.algorithm import *
 
 
 course_key = get_course_key_list(9)
+print(course_key)
 section = Section(2, 6, 10, course_key)
 print(section)
 

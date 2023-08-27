@@ -133,7 +133,7 @@ class Section:
 
     # random generate section
     def initialize_section(self, num_of_period, num_of_sections):
-        if self.course_key is None:
+        if not self.course_key:
             return None
         course_key = random_course_key_list(self.course_key)
         matrix = [[None for _ in range(num_of_period)]
@@ -153,6 +153,8 @@ class Section:
         return matrix
 
     def update_hcs(self):
+        if self.matrix is None:
+            return 0
         hcs = hard_constraint(self.matrix)
         self.hcs = hcs
         return hcs
