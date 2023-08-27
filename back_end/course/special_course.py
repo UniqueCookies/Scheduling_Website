@@ -33,14 +33,13 @@ def check_conflict_teacher(teacher_name_list):
 
 
 # check if the course is multiple or not
-def if_multiple(key):
+def if_special(key):
     connection, cursor = connect_database()
     cursor.execute(
         "select course_type from course_information where id = ?", (key,)
     )
     check = cursor.fetchone()
     check = check[0]
-    if check == 1:
-        return True
-    else:
-        return False
+
+    return check
+

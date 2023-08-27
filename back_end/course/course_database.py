@@ -158,19 +158,25 @@ def random_course_key_list(course_key_list):
 # get course name from the key
 def get_course_name(key):
     connection, cursor = connect_database()
-    cursor.execute("select course_name from course_information "
+    cursor.execute("select course_name, course_type from course_information "
                    "where id=?", (key,))
-    name = cursor.fetchone()
-    name = name[0]
+    info = cursor.fetchall()
     close_connection(cursor, connection)
-    return name
+
+    info = info[0]
+    name = info[0]
+    course_type = info[1]
+    return name, course_type
 
 
 # check if the keys refer to the same class
 def check_hcs_repeating_course(key1, key2):
     # fetch course_name
-    name1 = get_course_name(key1)
-    name2 = get_course_name(key2)
+    name1,course_type1= get_course_name(key1)
+    name2,course_type2 = get_course_name(key2)
+
+    if course_type1 ==2 and course_type2 == 2:
+        return False
     # compare
     return name1 == name2
 

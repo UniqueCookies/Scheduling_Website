@@ -59,17 +59,44 @@ def single_mutation_section(section):
     while row1 == row2 and col1 == col2:
         row2, col2 = random_generate(num_rows, num_cols)
 
-    if section.check_if_multiple(row1, col1) or section.check_if_multiple(row2, col2):
-        # If one of them is a double course
-        # Swap the entire columns
+    course_type1 = section.check_if_special(row1, col1)
+    course_type2 = section.check_if_special(row2, col2)
+
+    # normal course_type swap
+    if course_type1 == 0 and course_type2 == 0:
+        return section.swap_element(row1, col1, row2, col2)
+
+    # changing algorithm so that it does not have single mutation
+    if course_type1 == 2 or course_type2 == 2:
+        return None
+
+    if (course_type1 == 1 and course_type2 == 2) or (course_type1 == 2 and course_type2 == 1):
+        return None
+
+    if course_type1 == 1 or course_type2 == 1:
         if section.check_if_swap_multiple(col1, col2):
-            section.swap_column(col1, col2)
+            return section.swap_column(col1, col2)
         else:
             return None
-    else:
-        section.swap_element(row1, col1, row2, col2)
+    if course_type1 == 2 or course_type2 == 2:
+        # make sure the number are even
+        col1 = (col1 // 2) * 2
+        col2 = (col2 // 2) * 2
 
-    return True
+        if col1 == col2:
+            return None
+        return section.check_if_swap_double(row1, col1, row2, col2)
+
+    return None
+
+
+def double_mutation_schedule(schedule):
+    grade = len(schedule.grade_level_list)
+    choose_grade = random.randint(0, grade - 1)
+    section = schedule.matrix[choose_grade][0]
+    result = section.double_mutation()
+    schedule.update_hcs()
+    return result
 
 
 # Hill climber for singler course
@@ -81,6 +108,7 @@ def hill_climber(schedule):
     schedule.update_hcs()
     return result
 
+
 def hill_climber_section(section):
     num_rows = len(section.matrix)
     num_cols = len(section.matrix[0])
@@ -90,16 +118,16 @@ def hill_climber_section(section):
     # Generate random row and column indices for the two elements to swap
     row1, col1 = random_generate(num_rows, num_cols)
     row2, col2 = random_generate(num_rows, num_cols)
-    while section.check_if_multiple(row1, col1):
+    while not section.check_if_special(row1, col1) == 0:
         row1, col1 = random_generate(num_rows, num_cols)
-    while section.check_if_multiple(row2, col2):
+    while not section.check_if_special(row2, col2) == 0:
         row2, col2 = random_generate(num_rows, num_cols)
 
     # make sure this one is a clash,
     # after certain iteration, assume no clash
     while not section.check_if_clash(row1, col1) \
             and iteration < maximum_iteration:
-        while section.check_if_multiple(row1, col1):
+        while not section.check_if_special(row1, col1) == 0:
             row1, col1 = random_generate(num_rows, num_cols)
         iteration += 1
     if not section.check_if_clash(row1, col1):
@@ -109,7 +137,7 @@ def hill_climber_section(section):
     # make sure 2nd swap is a clash, assume no clash after certain iteration
     while (
             not section.check_if_clash(row2, col2) or col1 == col2
-    ) and iteration < maximum_iteration and section.check_if_multiple(row2, col2):
+    ) and iteration < maximum_iteration and not section.check_if_special(row2, col2) == 0:
         row2, col2 = random_generate(num_rows, num_cols)
         iteration += 1
 
@@ -128,6 +156,17 @@ def hill_climber_section(section):
 
 # Mutation step: randomly choose which function to perform
 def mutation(schedule):
+
+    #Double Mutation when section.hcs is 0 for all sections
+    count = 0
+    for i in range (len(schedule.matrix)):
+        section = schedule.matrix[i]
+        section = section[0]
+        if section.hcs ==0:
+            count +=1
+    if count==len(schedule.matrix):
+        double_mutation_schedule(schedule)
+
     function_list = [single_mutation, hill_climber]
     random_function = random.choice(function_list)
     result = random_function(schedule)

@@ -1,5 +1,5 @@
 from back_end.course.course_database import *
-from back_end.course.special_course import if_multiple, get_course_id_special
+from back_end.course.special_course import get_course_id_special, if_special
 from back_end.teacher.special_course_teacher import multiple_course_info, get_availability_double
 from back_end.teacher.teacher_database import *
 import itertools
@@ -32,7 +32,7 @@ def find_double(grade_level):
 # Use the key to get teacher and course name
 def transform_element(key):
     teacher_name = retrieve_teacher_name(key)
-    course_name = get_course_name(key)
+    course_name,course_type = get_course_name(key)
     return course_name, teacher_name
 
 
@@ -137,9 +137,7 @@ class Section:
         matrix = [[None for _ in range(num_of_period)]
                   for _ in range(num_of_sections)]
         course_key = self.fill_in_multiple(matrix, course_key)
-        print(course_key)
         course_key = self.fill_in_double(matrix, course_key)
-        print(course_key)
         if not course_key:
             return None
         count = 0
@@ -193,7 +191,6 @@ class Section:
                     else:
                         section += 1
                 j = j + 2
-        print(course_key)
         if any(course in course_key for course in course_list):
             return False
 
@@ -212,11 +209,13 @@ class Section:
 
         # update hcs
         self.hcs = self.update_hcs()
+        return True
 
     def swap_column(self, col1, col2):
         for row in self.matrix:
             row[col1], row[col2] = row[col2], row[col1]
         self.hcs = self.update_hcs()
+        return True
 
     # check if this teacher is teaching more than one class in the same period
     def check_if_clash(self, row1, col1):
@@ -229,11 +228,60 @@ class Section:
         return False
 
     # return True if it is multiple
-    def check_if_multiple(self, row1, col1):
+    def check_if_special(self, row1, col1):
         key = self.matrix[row1][col1]
-        return if_multiple(key)
+        return if_special(key)
 
     def check_if_swap_multiple(self, col1, col2):
         availability_list = self.multiple[1]
         if col1 in availability_list and col2 in availability_list:
             return True
+
+    def check_if_swap_double(self,row1,col1,row2,col2):
+        key1 = self.get_info(row1, col1)
+        key2 = self.get_info(row2, col2)
+
+        course_list = self.double[0]
+        availability_list = self.double[1]
+
+        position1 =100
+        position2 = 100
+        if key1 in course_list:
+            position1 = course_list.index(key1)
+        if key2 in course_list:
+            position2 = course_list.index(key2)
+
+        if not position1==100 and not position2==100:
+                return None
+        #if position one is double
+        if not position1==100 and col2 in availability_list[position1]:
+                return self.swap_double(row1,col1,row2,col2)
+        if not position2==100 and col1 in availability_list[position2]:
+                return self.swap_double(row1,col1,row2,col2)
+        return None
+
+    def swap_double(self,row1,col1,row2,col2):
+        temp = self.matrix[row1][col1]
+        self.matrix[row1][col1]=self.matrix[row2][col2]
+        self.matrix[row1][col1+1]=self.matrix[row2][col2]
+        self.matrix[row2][col2]=temp
+        self.matrix[row2][col2+1] = temp
+        return True
+
+    def double_mutation(self):
+        course_list = self.double[0]
+        availability_list = self.double[1]
+
+        for course in course_list:
+            position = course_list.index(course)
+            for i in range(len(self.matrix)):
+                for j in range(len(self.matrix[i])):
+                    if self.matrix[i][j] == course:
+                        row1 = i
+                        col1 = j
+            new_col = random.choice(availability_list[position])
+            new_col = (new_col//2)*2
+            col1 = (col1//2)*2
+            self.swap_double(row1, col1, row1, new_col)
+
+        return True
