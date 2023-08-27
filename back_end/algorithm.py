@@ -156,15 +156,14 @@ def hill_climber_section(section):
 
 # Mutation step: randomly choose which function to perform
 def mutation(schedule):
-
-    #Double Mutation when section.hcs is 0 for all sections
+    # Double Mutation when section.hcs is 0 for all sections
     count = 0
-    for i in range (len(schedule.matrix)):
+    for i in range(len(schedule.matrix)):
         section = schedule.matrix[i]
         section = section[0]
-        if section.hcs ==0:
-            count +=1
-    if count==len(schedule.matrix):
+        if section.hcs == 0:
+            count += 1
+    if count == len(schedule.matrix):
         double_mutation_schedule(schedule)
 
     function_list = [single_mutation, hill_climber]

@@ -162,7 +162,8 @@ def get_course_name(key):
                    "where id=?", (key,))
     info = cursor.fetchall()
     close_connection(cursor, connection)
-
+    if not info:
+        return False, False
     info = info[0]
     name = info[0]
     course_type = info[1]

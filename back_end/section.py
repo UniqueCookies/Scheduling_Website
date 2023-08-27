@@ -133,6 +133,8 @@ class Section:
 
     # random generate section
     def initialize_section(self, num_of_period, num_of_sections):
+        if self.course_key is None:
+            return None
         course_key = random_course_key_list(self.course_key)
         matrix = [[None for _ in range(num_of_period)]
                   for _ in range(num_of_sections)]
