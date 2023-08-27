@@ -189,19 +189,18 @@ def check_hcs_repeating_teacher(key1, key2):
     cursor.execute("select teacher_name from course_information "
                    "where id=?", (key1,))
     name1 = cursor.fetchone()
-    name1 = name1[0]
     cursor.execute("select teacher_name from course_information "
                    "where id=?", (key2,))
     name2 = cursor.fetchone()
-    name2 = name2[0]
     close_connection(cursor, connection)
-
-    # check if the teacher is overbooked
-    if name1 is not None and name2 is not None:
-        return name1 == name2
-    else:
+    if name1 is None:
         return None
+    if name2 is None:
+        return None
+    name1 = name1[0]
+    name2 = name2[0]
 
+    return name1 == name2
 
 def get_unique_section():
     connection, cursor = connect_database()

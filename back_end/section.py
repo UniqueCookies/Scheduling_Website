@@ -143,18 +143,18 @@ class Section:
         if not course_key:
             return None
         count = 0
+
         for period in range(num_of_period):
             for section in range(num_of_sections):
-                if matrix[section][period] is not None:
-                    break
-                matrix[section][period] = course_key[count]
-                count = count + 1
-        self.course_key = course_key
+                if matrix[section][period] is None:
+                    matrix[section][period] = course_key[count]
+                    count = count + 1
         return matrix
 
     def update_hcs(self):
         if self.matrix is None:
             return 0
+        print(self.matrix)
         hcs = hard_constraint(self.matrix)
         self.hcs = hcs
         return hcs
