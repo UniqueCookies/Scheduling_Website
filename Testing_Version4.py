@@ -19,8 +19,6 @@ grade_level_list = [(10, 2), (11, 2)]
 population = create_population(10,6,grade_level_list)
 parent = population[0]
 
-print("Did it get this far?")
-
 overall_iteration = 0
 count=0
 while parent.hcs > 0 and overall_iteration < 1:

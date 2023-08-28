@@ -154,7 +154,6 @@ class Section:
     def update_hcs(self):
         if self.matrix is None:
             return 0
-        print(self.matrix)
         hcs = hard_constraint(self.matrix)
         self.hcs = hcs
         return hcs

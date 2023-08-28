@@ -10,14 +10,18 @@ It is a work in progress.
 **progress**:
 able to generate initial schedule and check for its hard constraints
 algorithm is implemented
+Features: 
+Able to solve 1) classes need to happen at the same time within a section
+              2) two period long classes that need to happen back-to-back
+
 Current work: 1. Build a website for users to input information and get a feasible schedule 
               2. Make the website available to people
-              3. Allow certain class "multiple type" to have the classes at the same time (such as language course)
+              3. Adding feature: classes cannot happen at the same time
 
-Later improvement: 1. able to generate schedule for different grades
-           2. be able to detect the existence of feasible solutions
-           3. update the algorithm, such as easier way to calculate hard constraint
-           4. calculation of soft constraint and optimization method 
+Later improvement: 
+           1. be able to detect the existence of feasible solutions
+           2. update the algorithm, such as easier way to calculate hard constraint
+           3. calculation of soft constraint and optimization method 
 
 **Assumption for input**: 
 1. Teacher name needs to be unique
