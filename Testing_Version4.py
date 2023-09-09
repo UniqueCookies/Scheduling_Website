@@ -8,12 +8,12 @@ from back_end.course.course_database import *
 from back_end.teacher.teacher_database import *
 from back_end.algorithm import *
 
-'''''''''''
-course_key = get_course_key_list(7)
-section = Section(5, 7, 6, course_key)
-print(section)
-'''''''''''
 
+course_key = get_course_key_list(9)
+section = Section(3, 7, 9, course_key)
+print(section)
+
+'''''''''''
 grade_level_list = [(9,3)]
 population = create_population(10, 7, grade_level_list)
 parent = population[0]
@@ -34,3 +34,4 @@ while parent.hcs > 0 and overall_iteration < 1:
     print(offspring)
 
 print(f"The number of iteration is: {count}")
+'''''''''''
