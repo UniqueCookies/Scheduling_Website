@@ -10,7 +10,7 @@ import numpy as np
 def initialize_schedule(num_of_period, grade_level_list):
     num_of_grades = len(grade_level_list)
     temp = []
-    for i in range (num_of_grades):
+    for i in range(num_of_grades):
         grade = grade_level_list[i][0]
         course_key = get_course_key_list(grade)
         num_of_sections = grade_level_list[i][1]
@@ -20,15 +20,17 @@ def initialize_schedule(num_of_period, grade_level_list):
     return temp
 
 
-def repeating_teacher_schedule(schedule, num_of_period,grade_level_list):
+def repeating_teacher_schedule(schedule, num_of_period, grade_level_list):
     num_of_grades = len(schedule)
     temp = []
-    for i in range (num_of_grades):
+    total_section = 0
+    for i in range(num_of_grades):
         num_of_sections = grade_level_list[i][1]
-        for j in range (num_of_sections):
+        total_section += num_of_sections
+        for j in range(num_of_sections):
             temp.append(schedule[i][0].matrix[j])
-    num_of_sections = num_of_grades * num_of_sections
-    count = repeating_teacher(temp, num_of_sections, num_of_period)
+    #num_of_sections = num_of_grades * num_of_sections
+    count = repeating_teacher(temp, total_section, num_of_period)
     return count
 
 
@@ -46,9 +48,9 @@ class Schedule:
         return f"Schedule's teacher conflict is: {self.hcs}\n"
 
     def update_hcs(self):
-        hcs = repeating_teacher_schedule(self.matrix,self.num_of_period,self.grade_level_list)
-        num_of_grades=len(self.matrix)
-        for i in range (num_of_grades):
+        hcs = repeating_teacher_schedule(self.matrix, self.num_of_period, self.grade_level_list)
+        num_of_grades = len(self.matrix)
+        for i in range(num_of_grades):
             hcs += self.matrix[i][0].hcs
         self.hcs = hcs
         return hcs

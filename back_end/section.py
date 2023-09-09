@@ -21,6 +21,7 @@ def find_multiple(grade_level):
 
 def find_double(grade_level):
     double_course, teacher_name = get_course_id_special(grade_level, 2)
+    print(teacher_name)
     if not len(double_course) == 0 and not len(teacher_name) == 0:
         double_course, availability = get_availability_double(teacher_name, double_course)
         double_course_matrix = [t for t in double_course]
@@ -194,8 +195,6 @@ class Section:
                     else:
                         section += 1
                 j = j + 2
-        if any(course in course_key for course in course_list):
-            return False
 
         # course_key = [item for item in course_key if item not in course_list]
         return course_key

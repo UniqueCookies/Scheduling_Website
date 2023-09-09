@@ -14,7 +14,7 @@ section = Section(5, 7, 6, course_key)
 print(section)
 '''''''''''
 
-grade_level_list = [(6, 4), (7, 5)]
+grade_level_list = [(9,3)]
 population = create_population(10, 7, grade_level_list)
 parent = population[0]
 
@@ -24,7 +24,7 @@ while parent.hcs > 0 and overall_iteration < 1:
     parent = tournament_selection(population, 5)
     print(parent)
     iteration = 0
-    while parent.hcs > 0 and iteration < 1000:
+    while parent.hcs > 0 and iteration < 4000:
         offspring = create_offspring(parent)
         mutation(offspring)
         parent = compare_fitness(parent, offspring)
