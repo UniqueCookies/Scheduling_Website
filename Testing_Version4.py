@@ -9,18 +9,17 @@ from back_end.teacher.teacher_database import *
 from back_end.algorithm import *
 
 '''''''''''
-course_key = get_course_key_list(10)
-section = Section(2, 6, 10, course_key)
+course_key = get_course_key_list(7)
+section = Section(5, 7, 6, course_key)
 print(section)
 '''''''''''
 
-
-grade_level_list = [(10, 2), (11, 2)]
-population = create_population(10,6,grade_level_list)
+grade_level_list = [(6, 4), (7, 5)]
+population = create_population(10, 7, grade_level_list)
 parent = population[0]
 
 overall_iteration = 0
-count=0
+count = 0
 while parent.hcs > 0 and overall_iteration < 1:
     parent = tournament_selection(population, 5)
     print(parent)
@@ -29,8 +28,8 @@ while parent.hcs > 0 and overall_iteration < 1:
         offspring = create_offspring(parent)
         mutation(offspring)
         parent = compare_fitness(parent, offspring)
-        count +=1
-        iteration +=1
+        count += 1
+        iteration += 1
     overall_iteration += 1
     print(offspring)
 

@@ -140,10 +140,10 @@ class Section:
                   for _ in range(num_of_sections)]
         course_key = self.fill_in_multiple(matrix, course_key)
         course_key = self.fill_in_double(matrix, course_key)
+
         if not course_key:
             return None
         count = 0
-
         for period in range(num_of_period):
             for section in range(num_of_sections):
                 if matrix[section][period] is None:
@@ -160,7 +160,7 @@ class Section:
 
     def fill_in_multiple(self, matrix, course_key):
         if self.multiple[1] is None:
-            return False
+            return course_key
         item = random.choice(self.multiple[1])
         course_list = self.multiple[0]
         for i in range(len(matrix)):
@@ -172,7 +172,7 @@ class Section:
     # Should be added to different section
     def fill_in_double(self, matrix, course_key):
         if not self.double:
-            return None
+            return course_key
         course_list = self.double[0]
         availability = self.double[1]
 
